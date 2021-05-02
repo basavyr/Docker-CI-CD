@@ -21,4 +21,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: plot
-        path: dockerized_plot.pdf
+        path: py/numpy_test/dockerized_plot.pdf
