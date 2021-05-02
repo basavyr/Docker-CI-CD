@@ -20,10 +20,17 @@ class Functions:
 
 
 x1 = np.arange(0, 3, 0.1)
-x2 = np.linspace(0, 10, 21)
 
-plt.plot(x1, list(map(Functions().function1, x1)), '-or', label='f1')
-plt.plot(x1, list(map(Functions().function2, x1)), '-og', label='f2')
-plt.plot(x1, list(map(Functions().function3, x1)), '-ob', label='f3')
-plt.legend(loc='best')
-plt.savefig(fig, bbox_inches='tight', dpi=300)
+PLOT = 1
+
+if(PLOT):
+    print('Starts the plotting procedure')
+
+    plt.plot(x1, list(map(Functions().function1, x1)), '-or', label='f1')
+    plt.plot(x1, list(map(Functions().function2, x1)), '-og', label='f2')
+    plt.plot(x1, list(map(Functions().function3, x1)), '-ob', label='f3')
+    plt.legend(loc='best')
+    plt.savefig(fig, bbox_inches='tight', dpi=300)
+
+    print('Finishing the plotting procedure')
+    print(f'Plot saved at -> {fig}')
