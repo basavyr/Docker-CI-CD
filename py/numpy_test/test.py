@@ -21,7 +21,7 @@ class Functions:
 
 x1 = np.arange(0, 3, 0.1)
 
-PLOT = 0
+PLOT = 1
 
 if(PLOT):
     print('Starts the plotting procedure')
