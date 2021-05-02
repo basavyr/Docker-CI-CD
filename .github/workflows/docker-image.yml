@@ -18,3 +18,7 @@ jobs:
       run: docker build . -t dockerbuild
     - name: Run the built image
       run: docker run dockerbuild
+    - uses: actions/upload-artifact@v2
+      with:
+        name: plot
+        path: dockerized_plot.pdf

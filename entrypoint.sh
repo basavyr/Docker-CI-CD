@@ -5,3 +5,4 @@ cd py/numpy_test
 pyenv local systems
 pipenv install
 pipenv run python test.py
+ls
