@@ -21,7 +21,7 @@ class Functions:
 
 x1 = np.arange(0, 3, 0.1)
 
-PLOT = 1
+PLOT = 0
 
 if(PLOT):
     print('Starts the plotting procedure')
@@ -34,3 +34,12 @@ if(PLOT):
 
     print('Finishing the plotting procedure')
     print(f'Plot saved at -> {fig}')
+
+
+def t_fct(x1, a):
+    return x1 + a
+
+
+x_in = [1, 2, 3]
+
+print(f'{x_in} -> {list(map(t_fct, x_in,[2 for x in x_in]))}')
