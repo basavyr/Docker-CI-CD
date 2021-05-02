@@ -6,4 +6,4 @@ SHELL ["usr/bin/bash", "-c"]
 
 COPY . .
 
-CMD ["ls -l"]
+CMD ["ls"]
