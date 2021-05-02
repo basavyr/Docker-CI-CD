@@ -2,8 +2,9 @@
 FROM basavyr/pyenv-ubuntu:latest
 
 
-SHELL ["usr/bin/bash", "-c"]
+SHELL ["/bin/bash", "-c"]
+
 
 COPY . .
 
-CMD ["ls"]
+CMD ["./entrypoint.sh"]
