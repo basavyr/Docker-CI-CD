@@ -3,8 +3,12 @@
 import matplotlib.pyplot as plt
 import numpy.random as rd
 import numpy as np
+from datetime import datetime
 
-fig = 'dockerized_plot.pdf'
+now = lambda: str(datetime.utcnow())[
+    0:10] + '-' + str(datetime.utcnow())[11:19]  # get current time
+
+fig = './plots/dockerized_plot'
 
 
 class Functions:
@@ -38,8 +42,9 @@ def make_plot(a1, a2):
     plt.plot(x1, list(map(Functions().function3, x1,
                           [a2 for x in x1])), '-ob', label='f3')
     plt.legend(loc='best')
-    plt.savefig(fig, bbox_inches='tight', dpi=300)
 
+    fig_name = fig + '-' + now() + '.pdf'
+    plt.savefig(fig_name, bbox_inches='tight', dpi=300)
     print('Finishing the plotting procedure')
     print(f'Plot saved at -> {fig}')
 
