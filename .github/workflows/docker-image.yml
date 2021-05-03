@@ -20,5 +20,5 @@ jobs:
       run: docker run dockerbuild
     - uses: actions/upload-artifact@v2
       with:
-        name: plot
-        path: py/numpy_test/dockerized_plot.pdf
+        name: plots
+        path: py/numpy_test/plots/
