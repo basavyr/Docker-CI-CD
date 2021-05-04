@@ -4,6 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+watchdog = "*"
+autopep8 ="*"
+psutil = "*"
+numpy = "==1.18.5"
+matplotlib = "==3.3.3"
 
 [dev-packages]
 
