@@ -7,4 +7,4 @@ COPY . .
 
 CMD ["./entrypoint.sh"]
 
-RUN chmod 770 /var/log/
+RUN chmod -R +x /var/log/

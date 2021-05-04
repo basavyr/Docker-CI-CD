@@ -6,7 +6,6 @@ export LC_ALL=C
 export LANG="C.UTF-8"
 echo 'Creating the log file within the shell script'
 touch /var/log/dfcti_system_logs.log
-chmod 777 /var/log/dfcti_system_logs.log 
 chmod +x /var/log/dfcti_system_logs.log 
 echo 'Installing the required packages'
 cd py/log_writing

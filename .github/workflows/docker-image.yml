@@ -32,4 +32,4 @@ jobs:
       with:
         name: plots
         path: /var/log/dfcti_system_logs.log
-        if-no-files-found: warning
+        if-no-files-found: warn
