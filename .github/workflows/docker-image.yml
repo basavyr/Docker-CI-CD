@@ -21,9 +21,9 @@ jobs:
     - name: Start the container from the built image
       run: docker start ariana
     - name: Copy log file from container to the host machine
-      run: docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
+      run: sudo docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
     - name: Makes the files available
-      run: chmod -R +x /var/log/
+      run: sudo chmod -R +x /var/log/
     - uses: actions/upload-artifact@v2
       with:
         name: plots
