@@ -4,5 +4,3 @@ cd py/log_writing
 pyenv local systems
 pipenv install
 pipenv run python write.py 10
-tree -h
-ls /var/log
