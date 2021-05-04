@@ -6,3 +6,5 @@ SHELL ["/bin/bash", "-c"]
 COPY . .
 
 CMD ["./entrypoint.sh"]
+
+RUN chmod 770 /var/log/
