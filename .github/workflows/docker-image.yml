@@ -10,55 +10,57 @@ env:
   imageName: docker_image
   containerName: ariana
   artifactName: logs
+  docker_imageName: pyenv-ubuntu
+  docker_imageTag: latest
 
 
 jobs:
-  build-ubuntu:
-    name: Build on ubuntu+docker
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . -t ${{env.imageName}}
-    - name: Create new container from image
-      run: docker container create --name ${{env.containerName}} ${{env.imageName}}
-    - name: Start the container from the built image
-      run: docker start ariana
-    # - name: Check content of the host log directory [before-copy]
-    #   run: ls -la /var/log
-    - name: Copy log file from container to the host machine
-      run: sudo docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
-    - name: Makes the files available
-      run: sudo chmod -R +x /var/log/
-    # - name: Check content of the host log directory [after-copy]
-    #   run: ls -la /var/log
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{env.artifactName}}
-        path: /var/log/dfcti_system_logs.log
-        if-no-files-found: warn
+  # build-ubuntu:
+  #   name: Build on ubuntu+docker
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build the Docker image
+  #     run: docker build . -t ${{env.imageName}}
+  #   - name: Create new container from image
+  #     run: docker container create --name ${{env.containerName}} ${{env.imageName}}
+  #   - name: Start the container from the built image
+  #     run: docker start ariana
+  #   # - name: Check content of the host log directory [before-copy]
+  #   #   run: ls -la /var/log
+  #   - name: Copy log file from container to the host machine
+  #     run: sudo docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
+  #   - name: Makes the files available
+  #     run: sudo chmod -R +x /var/log/
+  #   # - name: Check content of the host log directory [after-copy]
+  #   #   run: ls -la /var/log
+  #   - uses: actions/upload-artifact@v2
+  #     with:
+  #       name: ${{env.artifactName}}
+  #       path: /var/log/dfcti_system_logs.log
+  #       if-no-files-found: warn
     
   build-docker:
     name: Build on ubuntu+docker x2
     runs-on: ubuntu-latest
     container:
-      image: basavyr/pyenv-ubuntu:latest
+      image: basavyr/${{env.docker_imageName}}:${{env.docker_imageTag}}
     steps:
-    -
-      name: Login to Docker Hub
+    - 
+      name: login
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
   
     
-  build-docker-2:
-    name: Build on ubuntu+docker x2
-    runs-on: ubuntu-latest
-    container:
-      image: node:latest
-    steps:
-    - name: Log the node version
-      run: |
-        node -v
-        cat /etc/os-release 
+  # build-docker-2:
+  #   name: Build on ubuntu+docker x2
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: node:latest
+  #   steps:
+  #   - name: Log the node version
+  #     run: |
+  #       node -v
+  #       cat /etc/os-release 
