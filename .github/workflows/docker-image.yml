@@ -18,9 +18,9 @@ jobs:
       run: docker build . -t docker_image
     - name: Create new container from image
       run: docker container create --name ariana docker_image 
-    name: Start the container from the built image
+    - name: Start the container from the built image
       run: docker start ariana
-    name: Copy log file from container to the host machine
+    - name: Copy log file from container to the host machine
       run: docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
     - uses: actions/upload-artifact@v2
       with:
