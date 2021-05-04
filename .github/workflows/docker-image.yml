@@ -45,11 +45,11 @@ jobs:
       image: basavyr/pyenv-ubuntu:latest
     steps:
     -
-        name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: check
       run: |
         uname -a
@@ -62,7 +62,7 @@ jobs:
     container:
       image: node:latest
     steps:
-         - name: Log the node version
-           run: |
-             node -v
-             cat /etc/os-release 
+    - name: Log the node version
+      run: |
+        node -v
+        cat /etc/os-release 
