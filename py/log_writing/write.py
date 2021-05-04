@@ -273,6 +273,11 @@ if(test_writer):
     else:
         print('FAILED the log writing test!')
     print('Finished writing logs.')
+    if(os.path.exists(log_file_path)):
+        print(f'The log file was successfully created/opened and updated.')
+    else:
+        print(f'The log file does not exist!')
+
 
 if(writer):
     print('Starting to generate log lines...')
