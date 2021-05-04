@@ -44,10 +44,14 @@ jobs:
     container:
       image: basavyr/ubuntu-pyenv:latest
     steps:
-    - name: check container
+    - uses: docker/login-action@v1
+      with:
+        name: Log-in
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: check
       run: |
         uname -a
         echo $PATH
         ls -la
         bash
-        
