@@ -233,7 +233,7 @@ class Write_Logs:
                 if(silent_mode == False):
                     print(f'Writing log line at {log_file_path}')
                 try:
-                    Write_Logs().Write_Log_Line(new_log_line, log_file_path)
+                    Write_Logs.Write_Log_Line(new_log_line, log_file_path)
                 except Exception as exc:
                     print(f'Could not write the log line\nReason: {exc}')
                 else:
