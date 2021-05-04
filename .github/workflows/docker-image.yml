@@ -55,3 +55,14 @@ jobs:
         uname -a
         echo $PATH
         ls -la
+    
+  build-docker-2:
+    name: Build on ubuntu+docker x2
+    runs-on: ubuntu-latest
+    container:
+      image: node:latest
+    steps:
+         - name: Log the node version
+           run: |
+             node -v
+             cat /etc/os-release 
