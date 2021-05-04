@@ -15,11 +15,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . -t dockerbuild
-    - name: Run the built image
-      run: docker run dockerbuild
+      run: docker build . -t docker_image
+    - name: Create new container from image
+      run: docker container create --name ariana docker_image 
+    name: Start the container from the built image
+      run: docker start ariana
+    name: Copy log file from container to the host machine
+      run: docker cp ariana:/var/log/dfcti_system_logs.log /var/log/
     - uses: actions/upload-artifact@v2
       with:
         name: plots
-        path: /var/log/dfcti*.log
+        path: /var/log/dfcti_system_logs.log
         if-no-files-found: error
