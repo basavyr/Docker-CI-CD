@@ -41,4 +41,11 @@ jobs:
   build-docker:
     container:
       image: basavyr/ubuntu-pyenv:latest
-   
+    steps:
+    - name: check container
+      run: |
+        uname -a
+        echo $PATH
+        ls -la
+        bash
+        
