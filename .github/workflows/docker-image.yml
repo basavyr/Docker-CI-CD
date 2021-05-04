@@ -10,8 +10,8 @@ env:
   imageName: docker_image
   containerName: ariana
   artifactName: logs
-  docker_imageName: pyenv-ubuntu
-  docker_imageTag: latest
+  dockerImageName: pyenv-ubuntu
+  dockerImageTag: latest
 
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
     name: Build on ubuntu+docker x2
     runs-on: ubuntu-latest
     container:
-      image: basavyr/${{env.docker_imageName}}:${{env.docker_imageTag}}
+      image: basavyr/${{env.dockerImageName}}:${{env.dockerImageTag}}
     steps:
     - 
       name: login
