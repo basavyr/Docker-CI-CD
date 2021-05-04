@@ -22,3 +22,4 @@ jobs:
       with:
         name: plots
         path: /var/log/dfcti*.log
+        if-no-files-found: error
