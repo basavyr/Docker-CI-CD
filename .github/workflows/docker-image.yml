@@ -6,12 +6,16 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  image: docker_image
+  container: ariana
+  artifactName: logs
+
+
 jobs:
-
-  build:
-
+  build-ubuntu:
+    name: Build on ubuntu+docker
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -33,3 +37,8 @@ jobs:
         name: plots
         path: /var/log/dfcti_system_logs.log
         if-no-files-found: warn
+    
+  build-docker:
+    container:
+      image: basavyr/ubuntu-pyenv:latest
+   
