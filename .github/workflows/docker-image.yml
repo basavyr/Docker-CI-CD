@@ -44,7 +44,7 @@ jobs:
     name: Build on ubuntu+docker x2
     runs-on: ubuntu-latest
     container:
-      image: basavyr/${{env.dockerImageName}}:${{env.dockerImageTag}}
+      image: basavyr/pyenv-ubuntu:latest
     steps:
     - 
       name: login
