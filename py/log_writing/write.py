@@ -17,7 +17,7 @@ import uuid
 rd = default_rng()
 
 
-log_file_path = '/var/log/dfcti_systemm_logs.log'
+log_file_path = '/var/log/dfcti_system_logs.log'
 
 
 class MachineID:
