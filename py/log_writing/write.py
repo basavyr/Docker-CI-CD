@@ -17,7 +17,7 @@ import uuid
 rd = default_rng()
 
 
-log_file_path = '/var/log/dfcti_system_logs.log'
+log_file_path = '/var/log/dfcti_systemm_logs.log'
 
 
 class MachineID:
@@ -189,9 +189,13 @@ class Write_Logs:
     def Generate_System_Log_Line(cls):
         """Generates a log line with the system stats
         """
-
-        log_line = f'{datetime.utcnow()} CPU:{SystemLogs.Get_CPU_Usage()}% MEM:{SystemLogs.Get_MEM_Usage()}% MACHINE-ID:{MACHINE_ID}'
-        return log_line
+        try:
+            log_line = f'{datetime.utcnow()} CPU:{SystemLogs.Get_CPU_Usage()}% MEM:{SystemLogs.Get_MEM_Usage()}% MACHINE-ID:{MACHINE_ID}'
+        except Exception as exc:
+            print(
+                f'There was an issue while trying to pull system stats:\nReason: {exc}')
+        else:
+            return log_line
 
     @classmethod
     def Write_Log_Line(cls, log_line, log_file):
@@ -203,9 +207,10 @@ class Write_Logs:
                 logger.write(log_line + '\n')
         except Exception as error:
             print(
-                f'There was a problem while trying write logs\nReason: {error}')
+                f'There was a problem while trying write logs at -> {log_file}\nReason: {error}')
+            return 0
         else:
-            pass
+            return 1
 
     @classmethod
     def Write_Process(cls, execution_time_secs, wait_time, silent_mode=True):
@@ -232,11 +237,9 @@ class Write_Logs:
             else:
                 if(silent_mode == False):
                     print(f'Writing log line at {log_file_path}')
-                try:
-                    Write_Logs.Write_Log_Line(new_log_line, log_file_path)
-                except Exception as exc:
-                    print(f'Could not write the log line\nReason: {exc}')
-                else:
+                wr_proc = Write_Logs.Write_Log_Line(
+                    new_log_line, log_file_path)
+                if(wr_proc):
                     count += 1
             time.sleep(int(wait_time))
 
@@ -267,6 +270,8 @@ if(test_writer):
     proc = Write_Logs.Write_Process(total_execution_time, REFRESH_CYCLE)
     if(total_execution_time / REFRESH_CYCLE == proc):
         print('PASSED the log writing test!')
+    else:
+        print('FAILED the log writing test!')
     print('Finished writing logs.')
 
 if(writer):
