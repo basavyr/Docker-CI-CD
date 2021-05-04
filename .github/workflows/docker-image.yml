@@ -7,8 +7,8 @@ on:
     branches: [ master ]
 
 env:
-  image: docker_image
-  container: ariana
+  imageName: docker_image
+  containerName: ariana
   artifactName: logs
 
 
@@ -19,9 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . -t docker_image
+      run: docker build . -t ${{env.image}}
     - name: Create new container from image
-      run: docker container create --name ariana docker_image 
+      run: docker container create --name ${{env.containerName}} ${{env.imageName}}
     - name: Start the container from the built image
       run: docker start ariana
     # - name: Check content of the host log directory [before-copy]
@@ -34,7 +34,7 @@ jobs:
     #   run: ls -la /var/log
     - uses: actions/upload-artifact@v2
       with:
-        name: plots
+        name: ${{env.artifactName}}
         path: /var/log/dfcti_system_logs.log
         if-no-files-found: warn
     
