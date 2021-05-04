@@ -39,8 +39,8 @@ jobs:
         if-no-files-found: warn
     
   build-docker:
-    name: Build on macos+docker
-    runs-on: macos-latest
+    name: Build on ubuntu+docker x2
+    runs-on: ubuntu-latest
     container:
       image: basavyr/ubuntu-pyenv:latest
     steps:
