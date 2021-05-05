@@ -38,7 +38,7 @@ class MachineID:
     def Check_File_Exists(self, file_path):
         """
         🔎 📄  Check if the file with machine id exists or not.
-        If the file does not exist, 
+        If the file does not exist,
         """
         try:
             checker = os.path.isfile(file_path)
@@ -226,26 +226,27 @@ class Write_Logs:
 
         print(f'Starting the log-writing process...')
         start_time = now()
-        for timer in tqdm.tqdm(range(total_execution_time)):
-            idx_now = now()
-            if(idx_now - start_time >= total_execution_time):
-                print(idx_now - start_time)
-                break
+        # for timer in tqdm.tqdm(range(total_execution_time)):
+        #     idx_now = now()
+        #     if(idx_now - start_time >= total_execution_time):
+        #         print(idx_now - start_time)
+        #         break
+        while(now() - start_time <= total_execution_time):
             try:
                 new_log_line = Write_Logs.Generate_System_Log_Line()
             except Exception as exc:
                 print(f'Could not generate log line\nReason: {exc}')
             else:
-                wr_proc = Write_Logs.Write_Log_Line(
+                line_wr_proc = Write_Logs.Write_Log_Line(
                     new_log_line, log_file_path)
-                if(wr_proc):
+                if(line_wr_proc):
                     count += 1
-            time.sleep(0.5)
+            time.sleep(wait_time)
 
         if(os.path.exists(log_file_path) and os.stat(log_file_path).st_size != 0 and count <= total_execution_time):
             print(
                 f'Finished writing logs successfully at {log_file_path} [Size={round(os.stat(log_file_path).st_size/1024,3)} Kbytes]')
-            print(f'{count} events were registered during the process.')
+            print(f'{count} log events were registered while pulling system stats.')
         else:
             print(f'Writing process finished unsuccessfully')
 
