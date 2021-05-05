@@ -46,17 +46,17 @@ jobs:
     # container:
     #   image: basavyr/pyenv-ubuntu:latest
     steps:
-    - 
-      name: login
+    - name: login
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: login2
+    - name: run
       run: |
-        uname -a
-        ls -la
-        
+        docker pull basavyr/pyenv-ubuntu
+        docker images
+        docker ps -a
+
 
   
     
