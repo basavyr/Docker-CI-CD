@@ -15,7 +15,7 @@ import numpy as np
 from numpy.random import default_rng
 rd = default_rng()
 
-now = lambda: time.time()
+now = lambda: float(time.time())
 """Gives the current time"""
 
 
@@ -215,7 +215,7 @@ class Write_Logs:
             return 1
 
     @classmethod
-    def Write_Process(cls, total_execution_time, wait_time, log_file_path, silent_mode=True):
+    def Write_Process(cls, total_execution_time, wait_time, log_file_path):
         """Starts making log lines
         Each log line is generated after a certain period, given by the user via `wait_time`
         After each line has been successfully generated, it is written in its corresponding log file.
@@ -225,26 +225,28 @@ class Write_Logs:
         count = 0
 
         print(f'Starting the log-writing process...')
+        start_time = now()
         for timer in range(total_execution_time):
-            if(silent_mode == False):
-                print(f'Generating log line...')
+            idx_now = now()
+            if(idx_now - start_time >= total_execution_time):
+                print(idx_now - start_time)
+                break
             try:
                 new_log_line = Write_Logs.Generate_System_Log_Line()
             except Exception as exc:
                 print(f'Could not generate log line\nReason: {exc}')
             else:
-                if(silent_mode == False):
-                    print(f'Writing log line at {log_file_path}')
                 wr_proc = Write_Logs.Write_Log_Line(
                     new_log_line, log_file_path)
                 if(wr_proc):
                     count += 1
-            time.sleep(int(wait_time))
+            time.sleep(wait_time)
 
-        if(os.path.exists(log_file_path) and count == total_execution_time / REFRESH_CYCLE):
-            print(f'Finished writing logs at {log_file_path}')
+        if(os.path.exists(log_file_path) and count <= total_execution_time):
+            print(f'Finished writing logs successfully at {log_file_path}')
+            print(f'{count} events were registered during the process.')
         else:
-            print(f'Log-writing process finished without success!')
+            print(f'Writing process finished unsuccessfully')
 
         return count
 
@@ -271,7 +273,6 @@ writer = False
 if(test_writer):
     proc = Write_Logs.Write_Process(
         total_execution_time, REFRESH_CYCLE, log_file_path)
-    print(proc)
 
 
 if(writer):

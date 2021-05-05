@@ -7,16 +7,16 @@ on:
     branches: [ master ]
 
 env:
-  imageName: docker_image
-  containerName: ariana
+  imageName: ariana_image
+  containerName: ariana_container
   artifactName: logs
   dockerImageName: pyenv-ubuntu
   dockerImageTag: latest
   logFileName: dfcti_system_logs.log
   logFilePath: /var/log/
 
-
 jobs:
+  
   build-ubuntu:
     name: Build on ubuntu+docker
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
     - name: Create new container from image
       run: docker container create --name ${{env.containerName}} ${{env.imageName}}
     - name: Start the container from the built image
-      run: docker start ariana
+      run: docker run ${{env.containerName}}
     - name: Copy log file from container to the host machine
       run: sudo docker cp ariana:${{env.logFilePath}}${{env.logFileName}} ${{env.logFilePath}}
     - name: Makes the files available
