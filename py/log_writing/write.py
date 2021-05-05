@@ -227,6 +227,7 @@ class Write_Logs:
         print(f'Starting the log-writing process...')
 
         start_time = now()
+        # https://stackoverflow.com/questions/45808140/using-tqdm-progress-bar-in-a-while-loop
         with tqdm.tqdm(total=total_execution_time) as pbar:
             while(now() - start_time <= total_execution_time):
                 try:
