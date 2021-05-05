@@ -242,8 +242,9 @@ class Write_Logs:
                     count += 1
             time.sleep(wait_time)
 
-        if(os.path.exists(log_file_path) and count <= total_execution_time):
-            print(f'Finished writing logs successfully at {log_file_path}')
+        if(os.path.exists(log_file_path) and os.stat(log_file_path).st_size != 0 and count <= total_execution_time):
+            print(
+                f'Finished writing logs successfully at {log_file_path} [Size={round(os.stat(log_file_path).st_size/1024,3)} Kbytes]')
             print(f'{count} events were registered during the process.')
         else:
             print(f'Writing process finished unsuccessfully')

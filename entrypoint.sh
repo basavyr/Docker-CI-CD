@@ -13,4 +13,3 @@ pyenv local systems
 pipenv install
 echo 'Starting the log-writer procedure'
 pipenv run python write.py 10
-cat /var/log/dfcti_system_logs.log
