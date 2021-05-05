@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 
+import time
+from datetime import datetime
+
+# import tqdm  # add a progress bar
+import uuid
 import os
 import platform
 import sys  # using it for getting command line arguments
@@ -8,13 +13,10 @@ import psutil  # used for getting stats related to the system resources
 
 import numpy as np
 from numpy.random import default_rng
-
-import time
-from datetime import datetime
-
-import uuid
-
 rd = default_rng()
+
+now = lambda: time.time()
+"""Gives the current time"""
 
 
 log_file_path = '/var/log/dfcti_system_logs.log'
@@ -213,24 +215,20 @@ class Write_Logs:
             return 1
 
     @classmethod
-    def Write_Process(cls, execution_time_secs, wait_time, silent_mode=True):
+    def Write_Process(cls, total_execution_time, wait_time, log_file_path, silent_mode=True):
         """Starts making log lines
         Each log line is generated after a certain period, given by the user via `wait_time`
         After each line has been successfully generated, it is written in its corresponding log file.
         The process is repeated as long as the runtime is below the total execution time, given through the `execution_time` variable
-        The time measurements are given in seconds (sec,s,secs)
+        The time measurements are given in seconds
         """
-        writing_state = True
-        total_execution_time = time.time()
         count = 0
-        while(writing_state):
-            if(time.time() - total_execution_time >= execution_time_secs):
-                print('Total executime time reached.\nStopping the writing process...')
-                break
+
+        print(f'Starting the log-writing process...')
+        for timer in range(total_execution_time):
             if(silent_mode == False):
                 print(f'Generating log line...')
             try:
-                # new_log_line = Write_Logs().Generate_Random_Log_Line() # Random
                 new_log_line = Write_Logs.Generate_System_Log_Line()
             except Exception as exc:
                 print(f'Could not generate log line\nReason: {exc}')
@@ -242,6 +240,11 @@ class Write_Logs:
                 if(wr_proc):
                     count += 1
             time.sleep(int(wait_time))
+
+        if(os.path.exists(log_file_path) and count == total_execution_time / REFRESH_CYCLE):
+            print(f'Finished writing logs at {log_file_path}')
+        else:
+            print(f'Log-writing process finished without success!')
 
         return count
 
@@ -266,17 +269,9 @@ test_writer = True
 writer = False
 
 if(test_writer):
-    print('Starting to generate log lines...')
-    proc = Write_Logs.Write_Process(total_execution_time, REFRESH_CYCLE)
-    if(total_execution_time / REFRESH_CYCLE == proc):
-        print('PASSED the log writing test!')
-    else:
-        print('FAILED the log writing test!')
-    print('Finished writing logs.')
-    if(os.path.exists(log_file_path)):
-        print(f'The log file was successfully created/opened and updated.')
-    else:
-        print(f'The log file does not exist!')
+    proc = Write_Logs.Write_Process(
+        total_execution_time, REFRESH_CYCLE, log_file_path)
+    print(proc)
 
 
 if(writer):

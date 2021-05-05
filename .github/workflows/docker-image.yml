@@ -54,13 +54,10 @@ jobs:
     - name: run
       run: |
         docker pull basavyr/pyenv-ubuntu
-        docker images
         docker ps -a
 
 
-  
-    
-  # build-docker-2:
+  # container-build:
   #   name: Build on ubuntu+docker x2
   #   runs-on: ubuntu-latest
   #   container:
