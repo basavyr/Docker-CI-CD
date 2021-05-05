@@ -227,17 +227,19 @@ class Write_Logs:
         print(f'Starting the log-writing process...')
 
         start_time = now()
-        while(now() - start_time <= total_execution_time):
-            try:
-                new_log_line = Write_Logs.Generate_System_Log_Line()
-            except Exception as exc:
-                print(f'Could not generate log line\nReason: {exc}')
-            else:
-                line_wr_proc = Write_Logs.Write_Log_Line(
-                    new_log_line, log_file_path)
-                if(line_wr_proc):
-                    count += 1
-            time.sleep(wait_time)
+        with tqdm.tqdm(total=total_execution_time) as pbar:
+            while(now() - start_time <= total_execution_time):
+                try:
+                    new_log_line = Write_Logs.Generate_System_Log_Line()
+                except Exception as exc:
+                    print(f'Could not generate log line\nReason: {exc}')
+                else:
+                    line_wr_proc = Write_Logs.Write_Log_Line(
+                        new_log_line, log_file_path)
+                    if(line_wr_proc):
+                        count += 1
+                time.sleep(wait_time)
+                pbar.update(wait_time)
 
         if(os.path.exists(log_file_path) and os.stat(log_file_path).st_size != 0 and count <= total_execution_time):
             """The process is successful only if the log-file does exist, it has non-size, and also the number of events does not succeed the total allowed number (given by the execution time of the process and the system stats pull-rate)
