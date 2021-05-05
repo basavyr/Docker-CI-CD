@@ -4,7 +4,7 @@
 import time
 from datetime import datetime
 
-# import tqdm  # add a progress bar
+import tqdm  # add a progress bar
 import uuid
 import os
 import platform
@@ -226,7 +226,7 @@ class Write_Logs:
 
         print(f'Starting the log-writing process...')
         start_time = now()
-        for timer in range(total_execution_time):
+        for timer in tqdm.tqdm(range(total_execution_time)):
             idx_now = now()
             if(idx_now - start_time >= total_execution_time):
                 print(idx_now - start_time)
