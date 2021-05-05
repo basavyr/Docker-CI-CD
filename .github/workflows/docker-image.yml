@@ -53,7 +53,10 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: login2
-      run: uname -a
+      run: |
+        uname -a
+        ls -la
+        
 
   
     
