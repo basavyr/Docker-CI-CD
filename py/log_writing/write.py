@@ -240,7 +240,7 @@ class Write_Logs:
                     new_log_line, log_file_path)
                 if(wr_proc):
                     count += 1
-            time.sleep(wait_time)
+            time.sleep(0.5)
 
         if(os.path.exists(log_file_path) and os.stat(log_file_path).st_size != 0 and count <= total_execution_time):
             print(
