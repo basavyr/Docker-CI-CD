@@ -225,12 +225,8 @@ class Write_Logs:
         count = 0
 
         print(f'Starting the log-writing process...')
+
         start_time = now()
-        # for timer in tqdm.tqdm(range(total_execution_time)):
-        #     idx_now = now()
-        #     if(idx_now - start_time >= total_execution_time):
-        #         print(idx_now - start_time)
-        #         break
         while(now() - start_time <= total_execution_time):
             try:
                 new_log_line = Write_Logs.Generate_System_Log_Line()
@@ -244,6 +240,8 @@ class Write_Logs:
             time.sleep(wait_time)
 
         if(os.path.exists(log_file_path) and os.stat(log_file_path).st_size != 0 and count <= total_execution_time):
+            """The process is successful only if the log-file does exist, it has non-size, and also the number of events does not succeed the total allowed number (given by the execution time of the process and the system stats pull-rate)
+            """
             print(
                 f'Finished writing logs successfully at {log_file_path} [Size={round(os.stat(log_file_path).st_size/1024,3)} Kbytes]')
             print(f'{count} log events were registered while pulling system stats.')
@@ -276,8 +274,6 @@ if(test_writer):
     proc = Write_Logs.Write_Process(
         total_execution_time, REFRESH_CYCLE, log_file_path)
 
-
 if(writer):
-    print('Starting to generate log lines...')
-    Write_Logs.Write_Process(total_execution_time, REFRESH_CYCLE)
-    print('Finished writing logs.')
+    proc = Write_Logs.Write_Process(
+        total_execution_time, REFRESH_CYCLE, log_file_path)

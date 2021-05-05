@@ -12,4 +12,4 @@ cd py/log_writing
 pyenv local systems
 pipenv install
 echo 'Starting the log-writer procedure'
-pipenv run python write.py 10
+pipenv run python write.py 20

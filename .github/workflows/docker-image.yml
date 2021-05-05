@@ -18,7 +18,7 @@ env:
 jobs:
 
   build-ubuntu:
-    name: Build on ubuntu+docker
+    name: Log-Writer -> Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -39,31 +39,3 @@ jobs:
         name: ${{env.artifactName}}
         path: ${{env.logFilePath}}${{env.logFileName}}
         if-no-files-found: warn
-    
-  # build-docker:
-  #   name: Build on ubuntu+docker x2
-  #   runs-on: ubuntu-latest
-  #   # container:
-  #   #   image: basavyr/pyenv-ubuntu:latest
-  #   steps:
-  #   - name: login
-  #     uses: docker/login-action@v1
-  #     with:
-  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       password: ${{ secrets.DOCKERHUB_TOKEN }}
-  #   - name: run
-  #     run: |
-  #       docker pull basavyr/pyenv-ubuntu
-  #       docker ps -a
-
-
-  # container-build:
-  #   name: Build on ubuntu+docker x2
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: node:latest
-  #   steps:
-  #   - name: Log the node version
-  #     run: |
-  #       node -v
-  #       cat /etc/os-release 
