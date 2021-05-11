@@ -9,6 +9,7 @@ autopep8 ="*"
 psutil = "*"
 numpy = "==1.18.5"
 matplotlib = "==3.3.3"
+pip = "*"
 
 [dev-packages]
 
