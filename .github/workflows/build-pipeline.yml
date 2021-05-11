@@ -11,7 +11,9 @@ on:
     types:
       - completed
 
-
+env:
+  imageName: ariana
+  containerName: ariana
 
 jobs:
 
@@ -23,7 +25,9 @@ jobs:
     - uses: ahmadnassri/action-workflow-run-wait@v1
     - name: Test docker
       run: |
-        echo Nice
+        docker build . -t ${{env.imageName}}
+        docker container create --name ${{env.containerName}} ${{env.imageName}}
+        docker start -i ${{env.containerName}}
   # build-ubuntu:
   #   name: Log-Writer -> Test
   #   runs-on: ubuntu-latest

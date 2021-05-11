@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+env:
+  appName: process
+  appPath: py/get_process/
+
 jobs:
 
   create-release:
@@ -14,12 +18,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ahmadnassri/action-workflow-run-wait@v1
+    - name: Prepare app
+      run: sudo apt-get install zip gzip tar
+    - name: Create app archive 📦
+      run: |
+        zip -r ${{env.appName}}_app.zip ${{env.appPath}}
     - name: Create release with artifact
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
         prerelease: false
-        title: "Apps"
+        title: "App ⭐️"
         files: |
-          Dockerfile
+          ${{env.appName}}
