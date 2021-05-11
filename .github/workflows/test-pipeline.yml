@@ -1,0 +1,36 @@
+name: Test-Applications
+
+on: [push,pull_request]
+
+env:
+  imageName: ariana_image
+  containerName: ariana_container
+
+
+jobs:
+  test-app1:
+    name: Test Apps
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . -t ${{env.imageName}}
+    - name: Create new container from image
+      run: docker container create --name ${{env.containerName}} ${{env.imageName}}
+    - name: Start the container from the built image
+      run: |
+        docker images
+        docker ps -a
+  # test-app2:
+  #   name: Log-Writer -> Test 2
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build the Docker image
+  #     run: docker build . -t ${{env.imageName}}
+  #   - name: Create new container from image
+  #     run: docker container create --name ${{env.containerName}} ${{env.imageName}}
+  #   - name: Start the container from the built image
+  #     run: |
+  #       docker images
+  #       docker ps -a

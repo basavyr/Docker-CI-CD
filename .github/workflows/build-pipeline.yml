@@ -1,0 +1,52 @@
+name: Build-Applications
+
+
+on:
+  # push:
+  #   branches: [ master ]         
+  # pull_request:
+  #   branches: [ master ]
+  workflow_run:
+    workflows: [ "Test-Applications" ]
+    types:
+      - completed
+
+
+
+jobs:
+
+  build-apps:
+    name: Builds Apps
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . -t ${{env.imageName}}
+    - name: Create new container from image
+      run: docker container create --name ${{env.containerName}} ${{env.imageName}}
+    - name: Start the container from the built image
+      run: |
+        docker images
+        docker ps -a
+  # build-ubuntu:
+  #   name: Log-Writer -> Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build the Docker image
+  #     run: docker build . -t ${{env.imageName}}
+  #   - name: Create new container from image
+  #     run: docker container create --name ${{env.containerName}} ${{env.imageName}}
+  #   - name: Start the container from the built image
+  #     run: docker start -i ${{env.containerName}}
+  #   - name: Copy log file from container to the host machine
+  #     run: sudo docker cp ${{env.containerName}}:${{env.logFilePath}}${{env.logFileName}} ${{env.logFilePath}}
+  #   - name: Makes the files available
+  #     run: sudo chmod -R +x ${{env.logFilePath}}
+  #   - name: Check the file's content
+  #     run: cat ${{env.logFilePath}}${{env.logFileName}}
+  #   - uses: actions/upload-artifact@v2
+  #     with:
+  #       name: ${{env.artifactName}}
+  #       path: ${{env.logFilePath}}${{env.logFileName}}
+  #       if-no-files-found: warn
