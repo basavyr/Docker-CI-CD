@@ -14,6 +14,3 @@ echo 'Running the python application within the current virtualenv'
 pipenv run python $pythonApp
 cd $HOME
 zip -r $releaseApp.zip $pythonAppPath
-ls
-ls -la
-pwd

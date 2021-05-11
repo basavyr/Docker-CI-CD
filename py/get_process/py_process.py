@@ -1,11 +1,15 @@
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
-
-
-def function(arg1, arg2):
-    return arg1 + np.exp(arg2)
-
+import psutil
 
 print('Works!')
 
-print(f'An array -> {np.arange(0,101,1)}')
+# Iterate over all running process
+for proc in psutil.process_iter():
+    try:
+        # Get process name & pid from process object.
+        processName = proc.name()
+        processID = proc.pid
+        print(processName , ' ::: ', processID)
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        pass
