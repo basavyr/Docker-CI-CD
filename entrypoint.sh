@@ -12,5 +12,6 @@ pipenv install
 
 echo 'Running the python application within the current virtualenv'
 pipenv run python $pythonApp
+cat plist.dat
 cd $HOME
 zip -r $releaseApp.zip $pythonAppPath
