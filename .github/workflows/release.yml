@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Test docker
-      run: |
-        docker images
-        docker ps -a
+    - uses: ahmadnassri/action-workflow-run-wait@v1
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
