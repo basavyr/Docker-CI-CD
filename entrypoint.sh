@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 pythonAppPath='py/get_process/'
-pythonApp='py_processes.py'
+pythonApp='py_process.py'
 
 export LANG=en_US.UTF8
 
