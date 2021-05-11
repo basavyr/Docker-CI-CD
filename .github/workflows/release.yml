@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ahmadnassri/action-workflow-run-wait@v1
-    - name: Prepare app
+    - name: Prepare App 🚀
       run: sudo apt-get install zip gzip tar
     - name: Create app archive 📦
       run: |
@@ -31,4 +31,4 @@ jobs:
         prerelease: false
         title: "App ⭐️"
         files: |
-          ${{env.appName}}
+          ${{env.appName}}_app.zip
