@@ -14,6 +14,7 @@ on:
 env:
   imageName: ariana
   containerName: ariana
+  appName: process_app
 
 jobs:
 
@@ -23,11 +24,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ahmadnassri/action-workflow-run-wait@v1
-    - name: Test docker
+    - name: Build Image ➡️ Create Container ➡️ Run Container ➡️ Save app as package 📦 🚀
       run: |
         docker build . -t ${{env.imageName}}
         docker container create --name ${{env.containerName}} ${{env.imageName}}
         docker start -i ${{env.containerName}}
+        docker cp ${{env.containerName}}:/root/${{env.appName}}.zip .
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.appName}}.zip
+        path: ${{env.appName}}.zip
+        if-no-files-found: warn
   # build-ubuntu:
   #   name: Log-Writer -> Test
   #   runs-on: ubuntu-latest
@@ -45,8 +52,3 @@ jobs:
   #     run: sudo chmod -R +x ${{env.logFilePath}}
   #   - name: Check the file's content
   #     run: cat ${{env.logFilePath}}${{env.logFileName}}
-  #   - uses: actions/upload-artifact@v2
-  #     with:
-  #       name: ${{env.artifactName}}
-  #       path: ${{env.logFilePath}}${{env.logFileName}}
-  #       if-no-files-found: warn
