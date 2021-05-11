@@ -10,6 +10,11 @@ SHELL ["/bin/bash", "-c"]
 COPY . .
 
 RUN pyenv global 3.8.6
+RUN python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pipenv
+
+RUN chmod 777 ./entrypoint.sh
+
+CMD ["/bin/bash","./entrypoint.sh"]
 
 # CMD ["python","./py/get_process/py_process.py"]
-CMD ["python"]

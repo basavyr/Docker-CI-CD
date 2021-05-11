@@ -19,3 +19,7 @@ The current project uses an [Ubuntu based image](https://hub.docker.com/reposito
     - matplotlib
     - psutil
     - watchdog
+
+## Usage
+
+Any Python script/application within the repository must be accompanied by a `Pipfile`, where the required modules are configured. Once the python script that needs to be executed has been configured, its path can be entered in the `entrypoint.sh` shell script such that the script will execute the script when the generated Docker container is started.

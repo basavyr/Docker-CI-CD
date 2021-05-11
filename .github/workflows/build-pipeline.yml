@@ -23,8 +23,7 @@ jobs:
     - uses: ahmadnassri/action-workflow-run-wait@v1
     - name: Test docker
       run: |
-        docker images
-        docker ps -a
+        echo Nice
   # build-ubuntu:
   #   name: Log-Writer -> Test
   #   runs-on: ubuntu-latest
