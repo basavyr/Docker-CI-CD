@@ -21,5 +21,16 @@ def Check_Process_Exists(process_name, process_list):
     return 0
 
 
+def Create_Process_Registry(process_name, process_list):
+    all_procs = []
+    return all_procs
 
-Check_Process_Exists('brave', processes)
+
+try:
+    proc_name = sys.argv[1]
+except IndexError as error:
+    proc_name = 'brave'
+# else:
+#     proc_name = 'brave'
+
+Check_Process_Exists(proc_name, processes)
