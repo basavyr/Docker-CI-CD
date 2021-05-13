@@ -13,6 +13,7 @@ class Process:
             try:
                 proc_name = str(proc.name()).lower()
                 proc_id = proc.pid
+	
                 p_list.append(f'{proc_name}:::{proc_id}')
             except(psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
@@ -25,7 +26,8 @@ class Process:
                 try:
                     processName = str(proc.name()).lower()
                     processID = proc.pid
-                    writer.write(f'{processName}:::{processID}\n')
+        	    proc_exe=proc.exe()
+	            writer.write(f'{processName}:::{processID}:::{proc_exe}\n')
                 except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                     pass
         return 1
@@ -33,5 +35,6 @@ class Process:
 
 if __name__ == '__main__':
     proc = Process()
+    proc.Create_Process_List(proc.process_list)
     print('Running the processes app.')
     print(f'The processes are saved into {proc.process_list}')
