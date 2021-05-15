@@ -4,5 +4,5 @@ import subprocess
 process = Popen(['ls', '-la'], stdout=PIPE, stderr=PIPE)
 stdout, stderr = process.communicate()
 # print(stdout)
-text=subprocess.getoutput('echo xx')
+text=subprocess.getoutput('ps aux | grep zsh')
 print(text)
