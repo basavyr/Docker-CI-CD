@@ -24,3 +24,6 @@ print("err: '{}'".format(err))
 print("exit: {}".format(code))
 
 print(output_string)
+
+ls = subprocess.run(['ls', '-a'], capture_output=True, text=True).stdout.strip("\n")
+print(ls)
