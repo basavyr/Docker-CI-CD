@@ -27,7 +27,17 @@ def Get_Subprocess_Output(cmd, args):
 
 def Run_Command(cmd, args):
     os.environ['PYTHONUNBUFFERED'] = "1"
-    proc = subprocess.Popen([cmd, args],
+    proc = subprocess.Popen([cmd],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,
+                            )
+    stdout, stderr = proc.communicate()
+    return proc.returncode, stdout, stderr
+
+
+def Run_Command_No_Args(cmd):
+    os.environ['PYTHONUNBUFFERED'] = "1"
+    proc = subprocess.Popen([cmd],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT,
                             )
@@ -41,6 +51,8 @@ commands = [['ls', '-l'], ['ifconfig']]
 for command in commands:
     if(len(command) == 2):
         print(Run_Command(command[0], command[1]))
+    else:
+        print(Run_Command_No_Args(command[0]))
 
 # ls = subprocess.run(['ps', 'aux'], capture_output=True,
 #                     text=True).stdout.strip("\n")
