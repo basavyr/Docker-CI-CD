@@ -7,18 +7,6 @@ import os
 to_utf8 = lambda x: x.decode('UTF-8')
 
 
-def Get_Command_Output(command):
-    os.environ['PYTHONUNBUFFERED'] = "1"
-    proc = subprocess.Popen(command,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT,
-                            )
-    stdout, stderr = proc.communicate()
-    stdout = to_utf8(stdout)
-    stderr = to_utf8(stderr)
-    return stdout, stderr
-
-
 def Get_Subprocess_Output(cmd, args):
     x_command = Run_Command(cmd, args)
     captured_output = x_command[1]
@@ -57,6 +45,19 @@ class Command:
                                 )
         stdout, stderr = proc.communicate()
         return proc.returncode, stdout, stderr
+
+    @classmethod
+    def Get_Command_Output(cls, cmd):
+        """output the command result and its errorcode"""
+        os.environ['PYTHONUNBUFFERED'] = "1"
+        proc = subprocess.Popen(command,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                )
+        stdout, stderr = proc.communicate()
+        stdout = to_utf8(stdout)
+        stderr = to_utf8(stderr)
+        return stdout, stderr
 
 
 commands = [['ls', '-l'], ['ifconfig']]
