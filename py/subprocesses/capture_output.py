@@ -22,5 +22,7 @@ print(f'out --> \n{out}')
 # print("err: '{}'".format(err))
 # print("exit: {}".format(code))
 
-ls = subprocess.run(['ls', '-la'], capture_output=True,
+ls = subprocess.run(['ps', 'aux'], capture_output=True,
                     text=True).stdout.strip("\n")
+
+print(type(ls))
