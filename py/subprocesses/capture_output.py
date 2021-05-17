@@ -28,8 +28,15 @@ def Get_Subprocess_Output(cmd, args):
 class Command:
     list_of_commands = []
 
+    @classmethod
+    def Add_Commands(cls, command_list):
+        cmd_list = []
+        for command in command_list:
+            cmd_list.append(command)
+        return cmd_list
+
     def __init__(self, command_list):
-        self.list_of_commands = command_list
+        self.list_of_commands = Command.Add_Commands(command_list)
 
     @classmethod
     def Run_Command(cls, cmd, args):
@@ -57,7 +64,7 @@ commands = [['ls', '-l'], ['ifconfig']]
 
 x_comms = Command(commands)
 
-for command in commands:
+for command in x_comms.list_of_commands:
     if(len(command) == 2):
         print(Command.Run_Command(command[0], command[1]))
     else:
