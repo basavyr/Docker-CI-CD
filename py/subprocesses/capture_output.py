@@ -3,7 +3,7 @@ import subprocess
 import sys
 import os
 
-
+# decode a byte object to a string using the UTF-8 format
 to_utf8 = lambda x: x.decode('UTF-8')
 
 
@@ -25,34 +25,43 @@ def Get_Subprocess_Output(cmd, args):
     return f'The executed command -> {[cmd,args]}\nThe returned output -> {captured_output}'
 
 
-def Run_Command(cmd, args):
-    os.environ['PYTHONUNBUFFERED'] = "1"
-    proc = subprocess.Popen([cmd],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT,
-                            )
-    stdout, stderr = proc.communicate()
-    return proc.returncode, stdout, stderr
+class Command:
+    list_of_commands = []
 
+    def __init__(self, command_list):
+        self.list_of_commands = command_list
 
-def Run_Command_No_Args(cmd):
-    os.environ['PYTHONUNBUFFERED'] = "1"
-    proc = subprocess.Popen([cmd],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT,
-                            )
-    stdout, stderr = proc.communicate()
-    return proc.returncode, stdout, stderr
+    @classmethod
+    def Run_Command(cls, cmd, args):
+        os.environ['PYTHONUNBUFFERED'] = "1"
+        proc = subprocess.Popen([cmd],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                )
+        stdout, stderr = proc.communicate()
+        return proc.returncode, stdout, stderr
+
+    @classmethod
+    def Run_Command_No_Args(cls, cmd):
+        os.environ['PYTHONUNBUFFERED'] = "1"
+        proc = subprocess.Popen([cmd],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                )
+        stdout, stderr = proc.communicate()
+        return proc.returncode, stdout, stderr
 
 
 commands = [['ls', '-l'], ['ifconfig']]
 
 
+x_comms = Command(commands)
+
 for command in commands:
     if(len(command) == 2):
-        print(Run_Command(command[0], command[1]))
+        print(Command.Run_Command(command[0], command[1]))
     else:
-        print(Run_Command_No_Args(command[0]))
+        print(Command.Run_Command_No_Args(command[0]))
 
 # ls = subprocess.run(['ps', 'aux'], capture_output=True,
 #                     text=True).stdout.strip("\n")
