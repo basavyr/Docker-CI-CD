@@ -12,18 +12,15 @@ def run(cmd):
                             )
     stdout, stderr = proc.communicate()
 
-    return proc.returncode, stdout, stderr
+    return proc.returncode, stdout.decode('UTF-8'), stderr
 
 
 code, out, err = run(['ls'])
 
-output_string = str(out)
 
-print("out: '{}'".format(out))
-print("err: '{}'".format(err))
-print("exit: {}".format(code))
+print(f'out --> \n{out}')
+# print("err: '{}'".format(err))
+# print("exit: {}".format(code))
 
-print(output_string)
-
-ls = subprocess.run(['ls', '-a'], capture_output=True, text=True).stdout.strip("\n")
-print(ls)
+ls = subprocess.run(['ls', '-la'], capture_output=True,
+                    text=True).stdout.strip("\n")
