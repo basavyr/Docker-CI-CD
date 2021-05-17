@@ -7,12 +7,6 @@ import os
 to_utf8 = lambda x: x.decode('UTF-8')
 
 
-def Get_Subprocess_Output(cmd, args):
-    x_command = Run_Command(cmd, args)
-    captured_output = x_command[1]
-    return f'The executed command -> {[cmd,args]}\nThe returned output -> {captured_output}'
-
-
 class Command:
     list_of_commands = []
 
@@ -29,7 +23,7 @@ class Command:
     @classmethod
     def Run_Command(cls, cmd, args):
         os.environ['PYTHONUNBUFFERED'] = "1"
-        proc = subprocess.Popen([cmd],
+        proc = subprocess.Popen([cmd, args],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 )
@@ -50,7 +44,7 @@ class Command:
     def Get_Command_Output(cls, cmd):
         """output the command result and its errorcode"""
         os.environ['PYTHONUNBUFFERED'] = "1"
-        proc = subprocess.Popen(command,
+        proc = subprocess.Popen(cmd,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 )
@@ -59,17 +53,27 @@ class Command:
         stderr = to_utf8(stderr)
         return stdout, stderr
 
+    @classmethod
+    def Capture_Command_Output(cls, process, args):
+        x_command = Command.Run_Command(process, args)
+        captured_output = x_command[1]
+        return f'The executed command -> {[process,args]}\nThe returned output -> {captured_output}'
+
 
 commands = [['ls', '-l'], ['ifconfig']]
 
 
 x_comms = Command(commands)
 
-for command in x_comms.list_of_commands:
-    if(len(command) == 2):
-        print(Command.Run_Command(command[0], command[1]))
-    else:
-        print(Command.Run_Command_No_Args(command[0]))
+
+print(Command.Capture_Command_Output('ls', '-l'))
+
+# for command in x_comms.list_of_commands:
+#     if(len(command) == 2):
+#         print(Command.Run_Command(command[0], command[1]))
+#     else:
+#         print(Command.Run_Command_No_Args(command[0]))
+
 
 # ls = subprocess.run(['ps', 'aux'], capture_output=True,
 #                     text=True).stdout.strip("\n")
