@@ -19,10 +19,10 @@ def Get_Command_Output(command):
     return stdout, stderr
 
 
-def Get_Subprocess_Output(command):
-    x_command = Run_Command(command)
+def Get_Subprocess_Output(cmd, args):
+    x_command = Run_Command(cmd, args)
     captured_output = x_command[1]
-    return f'The executed command -> {command}\nThe returned output -> {captured_output}'
+    return f'The executed command -> {[cmd,args]}\nThe returned output -> {captured_output}'
 
 
 def Run_Command(cmd, args):
@@ -35,8 +35,12 @@ def Run_Command(cmd, args):
     return proc.returncode, stdout, stderr
 
 
-cmd, args = 'ls', '-la'
+commands = [['ls', '-l'], ['ifconfig']]
 
-print(Run_Command(cmd, args))
+
+for command in commands:
+    if(len(command) == 2):
+        print(Run_Command(command[0], command[1]))
+
 # ls = subprocess.run(['ps', 'aux'], capture_output=True,
 #                     text=True).stdout.strip("\n")
