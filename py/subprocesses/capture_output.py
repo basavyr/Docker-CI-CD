@@ -19,18 +19,24 @@ def Get_Command_Output(command):
     return stdout, stderr
 
 
-def run(cmd):
+def Get_Subprocess_Output(command):
+    x_command = Run_Command(command)
+    captured_output = x_command[1]
+    return f'The executed command -> {command}\nThe returned output -> {captured_output}'
+
+
+def Run_Command(cmd, args):
     os.environ['PYTHONUNBUFFERED'] = "1"
-    proc = subprocess.Popen(cmd,
+    proc = subprocess.Popen([cmd, args],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT,
                             )
     stdout, stderr = proc.communicate()
+    return proc.returncode, stdout, stderr
 
-    return proc.returncode, stdout.decode('UTF-8'), stderr
 
+cmd, args = 'ls', '-la'
 
-print(run(['ls']))
-
-ls = subprocess.run(['ps', 'aux'], capture_output=True,
-                    text=True).stdout.strip("\n")
+print(Run_Command(cmd, args))
+# ls = subprocess.run(['ps', 'aux'], capture_output=True,
+#                     text=True).stdout.strip("\n")
