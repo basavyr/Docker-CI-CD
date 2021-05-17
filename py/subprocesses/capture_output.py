@@ -54,10 +54,22 @@ class Command:
         return stdout, stderr
 
     @classmethod
-    def Capture_Command_Output(cls, process, args):
-        x_command = Command.Run_Command(process, args)
+    def Get_Subprocess_Output(cls, commands):
+        executable = subprocess.run(commands, capture_output=True,
+                                    text=True).stdout.strip("\n")
+        return executable
+
+    @classmethod
+    def Capture_Command_Output(cls, command, args):
+        x_command = Command.Run_Command(command, args)
         captured_output = x_command[1]
-        return f'The executed command -> {[process,args]}\nThe returned output -> {captured_output}'
+        return f'The executed command -> {[command,args]}\nThe returned output -> {captured_output}'
+
+    @classmethod
+    def Capture_Subprocess_Output(cls, process):
+        x_command = Command.Get_Subprocess_Output(process)
+        captured_output = x_command
+        return f'The executed command -> {process}\nThe returned output -> {captured_output}'
 
 
 commands = [['ls', '-l'], ['ifconfig']]
@@ -66,14 +78,11 @@ commands = [['ls', '-l'], ['ifconfig']]
 x_comms = Command(commands)
 
 
-print(Command.Capture_Command_Output('ls', '-l'))
+print(Command.Capture_Subprocess_Output(['ls', '-l']))
+print(Command.Capture_Subprocess_Output(['ps', 'aux']))
 
 # for command in x_comms.list_of_commands:
 #     if(len(command) == 2):
 #         print(Command.Run_Command(command[0], command[1]))
 #     else:
 #         print(Command.Run_Command_No_Args(command[0]))
-
-
-# ls = subprocess.run(['ps', 'aux'], capture_output=True,
-#                     text=True).stdout.strip("\n")
