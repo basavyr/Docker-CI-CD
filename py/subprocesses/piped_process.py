@@ -5,6 +5,9 @@ import subprocess
 def decoder(x): return x.decode('UTF-8')
 
 
+output_file = 'results.out'
+
+
 class Piped_Process:
 
     def __init__(self, command_list):
@@ -74,14 +77,17 @@ class Piped_Process:
                 return -1
 
 
-def generate_command_list(command): return [
-    'ps aux', f'grep {command}', 'awk \'{print $2}\'']
+def generate_command_list(process, command_list):
+    grep_process = f'grep {process}'
+    command_list.insert(1, grep_process)
+    return command_list
 
 
-# command_list = ['ps aux', 'grep python']
+command_list = ['ps aux', 'awk \'{print $2,$11}\'']
 
-piped = Piped_Process.Save_Process_Output(
-    generate_command_list('python'), 'results.out')
+command_list = generate_command_list('python', command_list)
+
+Piped_Process.Save_Process_Output(command_list, output_file)
 # if(piped[1] != b''):
 #     print('😭')
 #     print(piped)
