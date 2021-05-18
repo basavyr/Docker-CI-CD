@@ -74,9 +74,14 @@ class Piped_Process:
                 return -1
 
 
-command_list = ['ps aux', 'grep python']
+def generate_command_list(command): return [
+    'ps aux', f'grep {command}', 'awk \'{print $2}\'']
 
-piped = Piped_Process.Save_Process_Output(command_list, 'results.out')
+
+# command_list = ['ps aux', 'grep python']
+
+piped = Piped_Process.Save_Process_Output(
+    generate_command_list('python'), 'results.out')
 # if(piped[1] != b''):
 #     print('😭')
 #     print(piped)

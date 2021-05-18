@@ -1,4 +1,4 @@
-robertp+    4505  0.1  2.0 8839944 163320 ?      Sl   May17   2:09 /var/lib/snapd/snap/code/65/usr/share/code/code /home/robertpoenaru/.vscode/extensions/ms-python.vscode-pylance-2021.5.2/dist/server.bundle.js --cancellationReceive=file:414f2dd8fd006c84b5a825f3e4a577704902010452 --node-ipc --clientProcessId=4036
-robertp+   54239  0.0  0.1  14344  9532 pts/3    S+   08:04   0:00 /home/robertpoenaru/anaconda3/bin/python ./piped_process.py
-robertp+   54280  0.0  0.0   7268  2724 pts/3    S+   08:04   0:00 /bin/sh -c ps aux | grep python
-robertp+   54282  0.0  0.0   6408  2004 pts/3    S+   08:04   0:00 grep python
+4505
+55152
+55193
+55195
