@@ -1,3 +1,3 @@
-robertpoenaru    88851   0.1  0.0  4635456   1832 s000  Ss    3:20PM   0:00.47 /bin/zsh -l
-robertpoenaru    18973   0.0  0.0  4399480    832 s000  S+    6:34AM   0:00.00 grep zsh
-robertpoenaru    18971   0.0  0.0  4410296   1156 s000  S+    6:34AM   0:00.00 /bin/sh -c ps aux | grep zsh
+├── [2.8K]  capture_output.py
+├── [2.6K]  piped_process.py
+├── [ 246]  sub_procs.py
