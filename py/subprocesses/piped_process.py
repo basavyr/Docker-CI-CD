@@ -67,10 +67,14 @@ class Piped_Process:
         if(return_code == 1):
             decoded_output = decoder(process_output)
         with open(output_file, 'w+') as saver:
-            saver.write(decoded_output)
+            try:
+                saver.write(decoded_output)
+            except Exception as err:
+                print(f'Could not write to the file...\nReason: {err}')
+                return -1
 
 
-command_list = ['tree -h', 'grep py']
+command_list = ['ps aux', 'grep python']
 
 piped = Piped_Process.Save_Process_Output(command_list, 'results.out')
 # if(piped[1] != b''):
