@@ -63,7 +63,9 @@ class Piped_Process:
 
     @classmethod
     def Save_Process_Output(cls, proc_list, output_file):
-        process = Piped_Process.Get_Process_Output(proc_list)
+        new_proc_list = Piped_Process.Generate_Command_List(
+            'python', proc_list)
+        process = Piped_Process.Get_Process_Output(new_proc_list)
         process_output = process[0]
         process_error = process[1]
         if(process_error == b''):
