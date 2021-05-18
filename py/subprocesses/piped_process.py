@@ -59,5 +59,7 @@ command_list = ['ls -la', 'grep  dat']
 piped = Piped_Process.Get_Process_Output(command_list)
 if(piped[1] != b''):
     print('😭')
+    print(piped)
 else:
     print('🥰')
+    print(piped)
