@@ -1,21 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 
-
-# for shell=False use absolute paths
-p = subprocess.Popen("ps aux | grep zsh", shell=True,
-                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-
-output = 'results.out'
-
-p_stdout = p.stdout.read()
-p_stderr = p.stderr.read()
-
 decoder = lambda x: x.decode('UTF-8')
-
-
-with open(output, 'w+') as save:
-    save.write(decoder(p_stdout))
 
 
 class Piped_Process:
@@ -24,15 +10,19 @@ class Piped_Process:
         if(len(command_list) == 1):
             self.piped_command = f'{command_list[0]}'
         else:
-            piped_command = f''
-            cmd_idx = 0
-            for cmd in command_list:
-                if(cmd_idx == 0):
-                    piped_command = cmd
-                else:
-                    piped_command = piped_command + ' | ' + cmd
-                cmd_idx += 1
-            self.piped_command = piped_command
+            self.piped_command = Piped_Process.Generate_Pipe(command_list)
+
+    @classmethod
+    def Generate_Pipe(cls, command_list):
+        piped_command = f''
+        cmd_idx = 0
+        for cmd in command_list:
+            if(cmd_idx == 0):
+                piped_command = cmd
+            else:
+                piped_command = piped_command + ' | ' + cmd
+            cmd_idx += 1
+        return piped_command
 
     @classmethod
     def Run_Process(cls, proc_list):
@@ -52,10 +42,21 @@ class Piped_Process:
             process.kill()
         return process_output, process_error
 
+    @classmethod
+    def Get_Process_Output(cls, proc_list):
+        process = subprocess.Popen(proc_list, shell=True,
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            output, errors = process.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            output, errors = process.communicate()
+        return output, errors
+
 
 command_list = ['ls -la', 'grep  dat']
 
-piped = Piped_Process.Run_Process(command_list)
+piped = Piped_Process.Get_Process_Output(command_list)
 if(piped[1] != b''):
     print('😭')
 else:
