@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 import subprocess
 
+# decode bytes to string
+
 
 def decoder(x): return x.decode('UTF-8')
 
 
+# the file where command output will be saved
 output_file = 'results.out'
 
 
@@ -76,21 +79,25 @@ class Piped_Process:
                 print(f'Could not write to the file...\nReason: {err}')
                 return -1
 
-
-def generate_command_list(process, command_list):
-    grep_process = f'grep {process}'
-    command_list.insert(1, grep_process)
-    return command_list
+    @classmethod
+    def Generate_Command_List(cls, process, command_list):
+        grep_process = f'grep {process}'
+        new_command_list = command_list
+        new_command_list.insert(1, grep_process)
+        return new_command_list
 
 
 command_list = ['ps aux', 'awk \'{print $2,$11}\'']
 
-command_list = generate_command_list('python', command_list)
+process_list = ['logstash', 'ssh', 'python', 'bash']
 
-Piped_Process.Save_Process_Output(command_list, output_file)
-# if(piped[1] != b''):
-#     print('😭')
-#     print(piped)
-# else:
-#     print('🥰')
-#     print(piped)
+initial_list = command_list
+
+for process in process_list:
+    new_command_list = []
+    print(command_list)
+    new_command_list = command_list
+    new_command_list.sort()
+    print(new_command_list)
+
+# Piped_Process.Save_Process_Output(command_list, output_file)

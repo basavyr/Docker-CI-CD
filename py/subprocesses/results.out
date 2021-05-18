@@ -1,4 +1,7 @@
-4505 /var/lib/snapd/snap/code/65/usr/share/code/code
-57471 /home/robertpoenaru/.pyenv/versions/systems/bin/python
-57513 /bin/sh
-57515 grep
+89317 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python
+21678 grep
+21676 /bin/sh
+21631 /Users/robertpoenaru/.pyenv/versions/3.8.6/bin/python
+21499 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python
+20472 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python
+18923 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python
