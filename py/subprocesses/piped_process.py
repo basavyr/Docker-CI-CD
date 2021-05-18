@@ -93,11 +93,6 @@ process_list = ['logstash', 'ssh', 'python', 'bash']
 
 initial_list = command_list
 
-for process in process_list:
-    new_command_list = []
-    print(command_list)
-    new_command_list = command_list
-    new_command_list.sort()
-    print(new_command_list)
 
-# Piped_Process.Save_Process_Output(command_list, output_file)
+if(__name__ == '__main__'):
+    Piped_Process.Save_Process_Output(command_list, output_file)
