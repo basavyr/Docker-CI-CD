@@ -9,7 +9,7 @@ def insert_element(pos, element, lister):
         lister.insert(pos, element)
     except Exception as exc:
         print(
-            f'Could not insert the element {element} at position {pos} in the list: {lister}')
+            f'Could not insert the element {element} at position {pos} in the list: {lister}\nReason: {exc}')
     else:
         pass
     return
