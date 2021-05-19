@@ -18,5 +18,5 @@ def insert_element(pos, element, lister):
 copied_list = my_list
 
 print(my_list, ' <-> ', copied_list)
-insert_element(1, 1, my_list)
+insert_element(1, 1, copied_list)
 print(my_list, ' <-> ', copied_list)
