@@ -114,8 +114,8 @@ class Register:
 
 command_list = ['ps aux', 'awk \'{print $2,$11}\'']
 
-# process_list = ['logstash', 'ssh', 'python', 'bash']
-process_list = ['bash']
+process_list = ['logstash', 'ssh', 'python', 'bash']
+# process_list = ['bash']
 
 initial_list = command_list
 
