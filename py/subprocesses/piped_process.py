@@ -50,8 +50,8 @@ class Piped_Process:
         return process_output, process_error
 
     @classmethod
-    def Get_Process_Output(cls, proc_list):
-        piped_process = Piped_Process.Generate_Pipe(proc_list)
+    def Get_Process_Output(cls, piped_process):
+        # piped_process = Piped_Process.Generate_Pipe(proc_list)
         process = subprocess.Popen(piped_process, shell=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
@@ -65,6 +65,7 @@ class Piped_Process:
     def Save_Process_Output(cls, process, process_list, output_file):
         new_process = Piped_Process.Create_Process_Register(
             process, process_list, output_file)
+        # print(new_process)
         process = Piped_Process.Get_Process_Output(new_process)
         process_output = process[0]
         process_error = process[1]
