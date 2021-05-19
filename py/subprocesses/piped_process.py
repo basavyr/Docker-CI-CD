@@ -88,6 +88,13 @@ class Piped_Process:
         new_command_list.insert(1, grep_process)
         return new_command_list
 
+    @classmethod
+    def Create_Process_Register(cls, process, command_list, output_file):
+        new_command_list = Piped_Process.Generate_Command_List(
+            process, command_list)
+        yy = Piped_Process.Generate_Pipe(new_command_list)
+        return yy
+
 
 command_list = ['ps aux', 'awk \'{print $2,$11}\'']
 
@@ -98,3 +105,7 @@ initial_list = command_list
 
 if(__name__ == '__main__'):
     Piped_Process.Save_Process_Output(command_list, output_file)
+    for proc in process_list:
+        yy = Piped_Process.Create_Process_Register(
+            proc, command_list, output_file)
+        print(yy)
