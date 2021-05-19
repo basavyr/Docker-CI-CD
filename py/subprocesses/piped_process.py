@@ -62,12 +62,13 @@ class Piped_Process:
         return output, errors
 
     @classmethod
-    def Save_Process_Output(cls, proc_list, output_file):
-        new_proc_list = Piped_Process.Generate_Command_List(
-            'python', proc_list)
-        process = Piped_Process.Get_Process_Output(new_proc_list)
+    def Save_Process_Output(cls, process, process_list, output_file):
+        new_process = Piped_Process.Create_Process_Register(
+            process, process_list, output_file)
+        process = Piped_Process.Get_Process_Output(new_process)
         process_output = process[0]
         process_error = process[1]
+        decoded_output = 'x'
         if(process_error == b''):
             return_code = 1
         else:
@@ -98,14 +99,16 @@ class Piped_Process:
 
 command_list = ['ps aux', 'awk \'{print $2,$11}\'']
 
-process_list = ['logstash', 'ssh', 'python', 'bash']
+# process_list = ['logstash', 'ssh', 'python', 'bash']
+process_list = ['bash']
 
 initial_list = command_list
 
 
 if(__name__ == '__main__'):
-    Piped_Process.Save_Process_Output(command_list, output_file)
     for proc in process_list:
+        Piped_Process.Save_Process_Output(
+            proc, command_list, output_file)
         yy = Piped_Process.Create_Process_Register(
             proc, command_list, output_file)
         print(yy)
