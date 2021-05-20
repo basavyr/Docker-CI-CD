@@ -157,37 +157,79 @@ class Register:
 process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
-if(__name__ == '__main__'):
-    # creating the directory where each instance of a process will be saved as a file
-    Register.Create_Register_Directory(Register.register_directory_name)
+class Utils():
+    """functions that are used for monitoring running processes, and any occuring instances within the process tree"""
 
-    runtime = False
-    clean_up = False
+    process_table = 'process.table'
 
-    total_execution_time = 5
+    @classmethod
+    def Watch_Process_Register(cls, register, execution_time):
+        runtime = True
 
-    proc_name = 'bash'
+        start_time = time.time()
+        if(runtime):
+            print('Watching register')
 
-    process_instances = Process.Count_Running_Instances(proc_name)
-    print(f'There are {process_instances}-{proc_name} instances running...')
+        # start the monitoring process
+        while(runtime):
+            print(f'watching...')
 
-    itx = 1
-    print(f'Starting iterations...')
+            # count the running instances for each process that exists in the registry
+            for process in register:
+                print(process)
 
-    start_time = time.time()
-    while(runtime):
-        print(f'Iteration {itx}...')
-        for monitored_process in process_list:
-            Register.Create_File_Register(
-                monitored_process, Process.process_getter_command)
-        if(int(time.time() - start_time) < total_execution_time):
-            time.sleep(1)
-        else:
-            runtime = False
-        itx += 1
+            if(time.time() - start_time >= execution_time):
+                runtime = False
+                break
 
-    if(clean_up):
-        print('Doing cleanup')
-        # cleaning up the register
-        # removing the files in which all running processes are stored
-        Register.Clean_Register_Directory()
+    @classmethod
+    def Pull_Processes(cls, process_table):
+        try:
+            with open(process_table, 'r+') as table:
+                process_list = table.readlines()
+        except FileNotFoundError:
+            return -1
+
+        # clean the list
+        cleaned_list = [str(x).strip() for x in process_list]
+        return cleaned_list
+
+
+yy = Utils.Pull_Processes(Utils.process_table)
+print(yy)
+
+
+# if(__name__ == '__main__'):
+#     # creating the directory where each instance of a process will be saved as a file
+#     Register.Create_Register_Directory(Register.register_directory_name)
+
+#     runtime = True
+#     clean_up = False
+
+#     total_execution_time = 5
+
+#     proc_name = 'logstash'
+
+#     itx = 1
+#     print(f'Starting iterations...')
+
+#     start_time = time.time()
+#     while(runtime):
+#         print(f'Iteration {itx}...')
+#         for monitored_process in process_list:
+#             Register.Create_File_Register(
+#                 monitored_process, Process.process_getter_command)
+#         if(int(time.time() - start_time) < total_execution_time):
+#             time.sleep(1)
+#         else:
+#             runtime = False
+#         itx += 1
+
+#     process_instances = Process.Count_Running_Instances(proc_name)
+#     print(f'There are {process_instances}-{proc_name} instances running...')
+
+#     if(clean_up):
+#         print('Doing cleanup')
+#         # cleaning up the register
+#         # removing the files in which all running processes are stored
+#         Register.Clean_Register_Directory()
