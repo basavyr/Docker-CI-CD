@@ -109,10 +109,15 @@ class Register:
 
     @classmethod
     def Create_File_Register(cls, proc_name, command_list):
+        debug_moode = 0
+
+        if(debug_moode):
+            print('Creating the proper path to the process list file')
         file_name = f'{Register.register_directory_name}/{proc_name}.list'
         full_command = Piped_Process.Create_Process_Register(
             proc_name, command_list)
-        print(f'Full command: {full_command}')
+        if(debug_moode):
+            print(f'Full command: {full_command}')
         with open(file_name, 'w+'):
             try:
                 Piped_Process.Save_Process_Output(
@@ -127,14 +132,18 @@ class Register:
             files = os.listdir(dirr)
             if(len(files) > 0):
                 for file in files:
-                    os.remove(
-                        f'{Register.register_directory_name}/{os.path.relpath(file)}')
-            else:
+                    try:
+                        os.remove(
+                            f'{Register.register_directory_name}/{os.path.relpath(file)}')
+                    except Exception as err:
+                        print(
+                            f'Could not remove the file from the process register!\nReason: {err}')
                 # print('Process register empty. Skipping the cleaning procedure')
                 pass
 
 
-command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
+# the command which will be used for checking if a certain process/service is running on the system or not
+process_getter_command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
 
 process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
@@ -145,18 +154,23 @@ if(__name__ == '__main__'):
 
     runtime = True
 
-    clean_up = False
+    clean_up = True
 
     total_execution_time = 5
     start_time = time.time()
 
+    print(f'Starting iterations...')
+    itx = 1
     while(runtime):
-        for proc in process_list:
-            Register.Create_File_Register(proc, command)
+        for monitored_process in process_list:
+            Register.Create_File_Register(
+                monitored_process, process_getter_command)
         if(time.time() - start_time >= total_execution_time):
             runtime = False
         else:
+            print(f'Iteration {itx}...')
             time.sleep(2)
+        itx += 1
 
     if(clean_up):
         print('Doing cleanup')
