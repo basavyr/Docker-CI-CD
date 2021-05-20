@@ -11,7 +11,7 @@ def decoder(x): return x.decode('UTF-8')
 class Process:
 
     # the command which will be used for checking if a certain process/service is running on the system or not
-    process_getter_command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
+    command_list = ['ps aux', 'awk \'{print $2,$11,$12}\'']
 
     # def __init__(self, command_list):
     #     if(len(command_list) == 1):
@@ -125,13 +125,21 @@ class Register:
     def Create_File_Register(cls, proc_name, command_list):
         debug_moode = 0
 
+        # generate the path where all the running instances will be saved
         if(debug_moode):
             print('Creating the proper path to the process list file')
         file_name = f'{Register.register_directory_name}/{proc_name}.list'
+
+        # with the path to the file active
+        # generates the command that will be executed
+        if(debug_moode):
+            print(
+                'Generating the proper command that has to be executed within the CLI for the current process')
         full_command = Process.Create_Full_Command(
             proc_name, command_list)
         if(debug_moode):
             print(f'Full command: {full_command}')
+
         with open(file_name, 'w+'):
             try:
                 Process.Save_Process_Output(
@@ -179,7 +187,7 @@ class Utils():
             # count the running instances for each process that exists in the registry
             for process in register:
                 # create a file register from the process
-                Register.Create_File_Register(process,)
+                Register.Create_File_Register(process, Process.command_list)
                 number_of_instances = Process.Count_Running_Instances(process)
 
                 print(f'Analyzing running instances of {process}...')
@@ -214,9 +222,9 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = True
+    clean_up = False
 
-    EXECUTION_TIME = 5
+    EXECUTION_TIME = 1
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
 
