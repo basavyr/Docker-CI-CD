@@ -195,41 +195,37 @@ class Utils():
         return cleaned_list
 
 
-yy = Utils.Pull_Processes(Utils.process_table)
-print(yy)
+if(__name__ == '__main__'):
+    # creating the directory where each instance of a process will be saved as a file
+    Register.Create_Register_Directory(Register.register_directory_name)
 
+    runtime = True
+    clean_up = False
 
-# if(__name__ == '__main__'):
-#     # creating the directory where each instance of a process will be saved as a file
-#     Register.Create_Register_Directory(Register.register_directory_name)
+    total_execution_time = 5
 
-#     runtime = True
-#     clean_up = False
+    PROCESS_LIST = Utils.Pull_Processes(Utils.process_table)
 
-#     total_execution_time = 5
+    itx = 1
+    print(f'Starting iterations...')
 
-#     proc_name = 'logstash'
+    start_time = time.time()
+    while(runtime):
+        print(f'Iteration {itx}...')
+        for monitored_process in PROCESS_LIST:
+            print(f'Will monitor -> {monitored_process}')
 
-#     itx = 1
-#     print(f'Starting iterations...')
-
-#     start_time = time.time()
-#     while(runtime):
-#         print(f'Iteration {itx}...')
-#         for monitored_process in process_list:
-#             Register.Create_File_Register(
-#                 monitored_process, Process.process_getter_command)
-#         if(int(time.time() - start_time) < total_execution_time):
-#             time.sleep(1)
-#         else:
-#             runtime = False
-#         itx += 1
+        if(int(time.time() - start_time) < total_execution_time):
+            time.sleep(1)
+        else:
+            runtime = False
+        itx += 1
 
 #     process_instances = Process.Count_Running_Instances(proc_name)
 #     print(f'There are {process_instances}-{proc_name} instances running...')
 
-#     if(clean_up):
-#         print('Doing cleanup')
-#         # cleaning up the register
-#         # removing the files in which all running processes are stored
-#         Register.Clean_Register_Directory()
+    if(clean_up):
+        print('Doing cleanup')
+        # cleaning up the register
+        # removing the files in which all running processes are stored
+        Register.Clean_Register_Directory()
