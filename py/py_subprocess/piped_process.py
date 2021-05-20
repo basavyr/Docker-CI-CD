@@ -3,19 +3,21 @@ import subprocess
 import os
 import time
 
+
 # decode bytes to string
-
-
 def decoder(x): return x.decode('UTF-8')
 
 
-class Piped_Process:
+class Process:
 
-    def __init__(self, command_list):
-        if(len(command_list) == 1):
-            self.piped_command = f'{command_list[0]}'
-        else:
-            self.piped_command = Piped_Process.Generate_Pipe(command_list)
+    # the command which will be used for checking if a certain process/service is running on the system or not
+    process_getter_command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
+
+    # def __init__(self, command_list):
+    #     if(len(command_list) == 1):
+    #         self.piped_command = f'{command_list[0]}'
+    #     else:
+    #         self.piped_command = Process.Generate_Pipe(command_list)
 
     @classmethod
     def Generate_Pipe(cls, command_list):
@@ -30,12 +32,11 @@ class Piped_Process:
         return piped_command
 
     @classmethod
-    def Run_Process(cls, proc_list):
+    def Run_Process(cls, piped_command):
         """Execute a piped command after each argument has been properly added in the piped instruction
         Returns the output and the error of the executed command
         """
-        piped_process = Piped_Process(proc_list).piped_command
-        process = subprocess.Popen(piped_process, shell=True,
+        process = subprocess.Popen(piped_command, shell=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         try:
             process_output = process.stdout.read()
@@ -47,8 +48,8 @@ class Piped_Process:
         return process_output, process_error
 
     @classmethod
-    def Get_Process_Output(cls, piped_process):
-        process = subprocess.Popen(piped_process, shell=True,
+    def Get_Process_Output(cls, piped_command):
+        process = subprocess.Popen(piped_command, shell=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             output, errors = process.communicate(timeout=10)
@@ -62,7 +63,7 @@ class Piped_Process:
         # append the directory name for the relative path of the register
         # dir_output_file = f'{Register.register_directory_name}/{output_file}'
 
-        process = Piped_Process.Get_Process_Output(full_command)
+        process = Process.Get_Process_Output(full_command)
         process_output = process[0]
         process_error = process[1]
         decoded_output = 'x'
@@ -88,9 +89,9 @@ class Piped_Process:
 
     @classmethod
     def Create_Process_Register(cls, process, command_list):
-        new_command_list = Piped_Process.Generate_Command_List(
+        new_command_list = Process.Generate_Command_List(
             process, command_list)
-        grepped_command = Piped_Process.Generate_Pipe(new_command_list)
+        grepped_command = Process.Generate_Pipe(new_command_list)
         return grepped_command
 
 
@@ -114,13 +115,13 @@ class Register:
         if(debug_moode):
             print('Creating the proper path to the process list file')
         file_name = f'{Register.register_directory_name}/{proc_name}.list'
-        full_command = Piped_Process.Create_Process_Register(
+        full_command = Process.Create_Process_Register(
             proc_name, command_list)
         if(debug_moode):
             print(f'Full command: {full_command}')
         with open(file_name, 'w+'):
             try:
-                Piped_Process.Save_Process_Output(
+                Process.Save_Process_Output(
                     full_command, file_name)
             except Exception as exc:
                 print(f'Error: {exc}')
@@ -142,9 +143,6 @@ class Register:
                 pass
 
 
-# the command which will be used for checking if a certain process/service is running on the system or not
-process_getter_command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
-
 process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
@@ -153,18 +151,18 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-
     clean_up = True
 
     total_execution_time = 5
     start_time = time.time()
 
-    print(f'Starting iterations...')
     itx = 1
+    print(f'Starting iterations...')
+
     while(runtime):
         for monitored_process in process_list:
             Register.Create_File_Register(
-                monitored_process, process_getter_command)
+                monitored_process, Process.process_getter_command)
         if(time.time() - start_time >= total_execution_time):
             runtime = False
         else:
@@ -174,4 +172,6 @@ if(__name__ == '__main__'):
 
     if(clean_up):
         print('Doing cleanup')
+        # cleaning up the register
+        # removing the files in which all running processes are stored
         Register.Clean_Register_Directory()
