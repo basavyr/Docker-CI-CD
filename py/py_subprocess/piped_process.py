@@ -187,23 +187,27 @@ class Utils():
         # setup the time after which the script checks for running instances again
         refresh_time = 5
 
+        current_instance_number = []
+        last_instance_number = []
+
         itx = 1
         # start the monitoring process
         while(runtime and now()-start_time < execution_time):
             print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
+            current_instance_number = []
             for process in register:
                 # create a file register from the process
                 Register.Create_File_Register(process, Process.command_list)
-                number_of_instances = Process.Count_Running_Instances(process)
+                # number_of_instances = Process.Count_Running_Instances(process)
 
-                print(f'Monitoring {process} process...')
-                print(
-                    f'{number_of_instances} running instances for {process} found.')
-                if(number_of_instances == -1):
-                    print(f'should remove the process from the register')
+                # print(f'Monitoring {process} process...')
+            #     print(
+            #         f'{number_of_instances} running instances for {process} found.')
+            #     if(number_of_instances == -1):
+            #         print(f'should remove the process from the register')
 
-            print('\n')
+            # print('\n')
             # if(time.time() - start_time >= execution_time):
             #     print('Total execution time reached.\nStopping the execution pipeline.')
             #     runtime = False
@@ -233,7 +237,7 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = False
+    clean_up = True
 
     EXECUTION_TIME = 15
 
@@ -246,3 +250,8 @@ if(__name__ == '__main__'):
         # cleaning up the register
         # removing the files in which all running processes are stored
         Register.Clean_Register_Directory()
+
+        # delete the register folder content aftet the monitoring procedure ended
+        if(clean_up):
+            print('Cleaning up the registry directory')
+            Register.Clean_Register_Directory()
