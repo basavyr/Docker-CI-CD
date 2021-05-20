@@ -160,14 +160,14 @@ if(__name__ == '__main__'):
 
     start_time = time.time()
     while(runtime):
+        print(f'Iteration {itx}...')
         for monitored_process in process_list:
             Register.Create_File_Register(
                 monitored_process, Process.process_getter_command)
-        if(time.time() - start_time >= total_execution_time):
-            runtime = False
-        else:
-            print(f'Iteration {itx}...')
+        if(int(time.time() - start_time) < total_execution_time):
             time.sleep(1)
+        else:
+            runtime = False
         itx += 1
 
     if(clean_up):
