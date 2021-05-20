@@ -4,6 +4,8 @@ import os
 import time
 
 # decode bytes to string
+
+
 def decoder(x): return x.decode('UTF-8')
 
 
@@ -100,9 +102,9 @@ class Register:
     def Create_Register_Directory(cls, register_name):
         try:
             os.mkdir(register_name)
-        except FileExistsError as err:
-            print(f'Could not make directory.\nReason: {err}')
-            return
+        except FileExistsError:
+            # print(f'Could not make directory.\nReason: {err}')
+            pass
         return
 
     @classmethod
@@ -118,25 +120,39 @@ class Register:
             except Exception as exc:
                 print(f'Error: {exc}')
 
+    @classmethod
+    def Clean_Register_Directory(cls):
+        if(os.path.isdir(Register.register_directory_name)):
+            y = os.listdir(Register.register_directory_name)
+            if(len(y) > 0):
+                for file in y:
+                    print(f'{y} <-{file}')
+                    os.remove(
+                        f'{Register.register_directory_name}/{os.path.relpath(file)}')
+            else:
+                print('Process register empty. Skipping the cleaning procedure')
+
 
 command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
 
 process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
-if(__name__ == '__main__'):
-    # creating the directory where each instance of a process will be saved as a file
-    Register.Create_Register_Directory(Register.register_directory_name)
+Register.Clean_Register_Directory()
 
-    runtime=True
-    
-    total_execution_time=5
-    start_time=time.time()
+# if(__name__ == '__main__'):
+#     # creating the directory where each instance of a process will be saved as a file
+#     Register.Create_Register_Directory(Register.register_directory_name)
 
-    while(runtime):
-        for proc in process_list:
-            Register.Create_File_Register(proc, command)
-        if(time.time()-start_time>=total_execution_time):
-            runtime=False
-        else:
-            time.sleep(1)
+#     runtime=True
+
+#     total_execution_time=5
+#     start_time=time.time()
+
+#     while(runtime):
+#         for proc in process_list:
+#             Register.Create_File_Register(proc, command)
+#         if(time.time()-start_time>=total_execution_time):
+#             runtime=False
+#         else:
+#             time.sleep(1)
