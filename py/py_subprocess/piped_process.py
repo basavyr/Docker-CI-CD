@@ -81,15 +81,15 @@ class Process:
                 return -1
 
     @classmethod
-    def Generate_Command_List(cls, process, command_list):
+    def Generate_Grepped_Command(cls, process, command_list):
         grep_process = f'grep {process}'
         new_command_list = list(command_list)
         new_command_list.insert(1, grep_process)
         return new_command_list
 
     @classmethod
-    def Create_Process_Register(cls, process, command_list):
-        new_command_list = Process.Generate_Command_List(
+    def Create_Full_Command(cls, process, command_list):
+        new_command_list = Process.Generate_Grepped_Command(
             process, command_list)
         grepped_command = Process.Generate_Pipe(new_command_list)
         return grepped_command
@@ -115,7 +115,7 @@ class Register:
         if(debug_moode):
             print('Creating the proper path to the process list file')
         file_name = f'{Register.register_directory_name}/{proc_name}.list'
-        full_command = Process.Create_Process_Register(
+        full_command = Process.Create_Full_Command(
             proc_name, command_list)
         if(debug_moode):
             print(f'Full command: {full_command}')
