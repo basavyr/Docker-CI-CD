@@ -187,21 +187,32 @@ class Utils():
         # setup the time after which the script checks for running instances again
         refresh_time = 5
 
-        current_instance_number = []
-        last_instance_number = []
+        current_instance_number = [0 for _ in register]
+        last_instance_number = [0 for _ in register]
 
         itx = 1
         # start the monitoring process
         while(runtime and now()-start_time < execution_time):
             print(f'Iteration {itx}...')
-            # count the running instances for each process that exists in the registry
-            current_instance_number = []
             for process in register:
                 # create a file register from the process
                 Register.Create_File_Register(process, Process.command_list)
-                # number_of_instances = Process.Count_Running_Instances(process)
+            # count the running instances for each process that exists in the registry
+            current_instance_number = [Process.Count_Running_Instances(
+                process) for process in register]
+            print(current_instance_number)
 
-                # print(f'Monitoring {process} process...')
+            print(f'before monitoring -> {last_instance_number}')
+            print(f'after monitoring -> {current_instance_number}')
+
+            diffs = [last_instance_number[idx]-current_instance_number[idx]
+                     for idx in range(len(register))]
+            if(itx > 1):
+                print(f'changes -> {diffs}')
+
+            last_instance_number = list(current_instance_number)
+
+            # print(f'Monitoring {process} process...')
             #     print(
             #         f'{number_of_instances} running instances for {process} found.')
             #     if(number_of_instances == -1):
@@ -233,6 +244,7 @@ class Utils():
 
 
 if(__name__ == '__main__'):
+
     # creating the directory where each instance of a process will be saved as a file
     Register.Create_Register_Directory(Register.register_directory_name)
 
@@ -250,8 +262,3 @@ if(__name__ == '__main__'):
         # cleaning up the register
         # removing the files in which all running processes are stored
         Register.Clean_Register_Directory()
-
-        # delete the register folder content aftet the monitoring procedure ended
-        if(clean_up):
-            print('Cleaning up the registry directory')
-            Register.Clean_Register_Directory()
