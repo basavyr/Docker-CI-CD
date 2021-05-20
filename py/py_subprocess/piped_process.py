@@ -8,6 +8,10 @@ import time
 def decoder(x): return x.decode('UTF-8')
 
 
+# shows the current time usinng the daetime module
+def now(): return time.time()
+
+
 class Process:
 
     # the command which will be used for checking if a certain process/service is running on the system or not
@@ -105,7 +109,7 @@ class Process:
                 lines = process_reader.readlines()
         except FileNotFoundError:
             return -1
-        return len(lines)
+        return len(lines)-2
 
 
 class Register:
@@ -180,9 +184,12 @@ class Utils():
         if(runtime):
             print(f'Watching register -> {register}\n')
 
+        # setup the time after which the script checks for running instances again
+        refresh_time = 5
+
         itx = 1
         # start the monitoring process
-        while(runtime and time.time()-start_time < execution_time):
+        while(runtime and now()-start_time < execution_time):
             print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
             for process in register:
@@ -201,11 +208,14 @@ class Utils():
             #     print('Total execution time reached.\nStopping the execution pipeline.')
             #     runtime = False
             #     break
-
+            if(now()-start_time >= execution_time):
+                print('Finishing monitoring processes...')
+                runtime = False
+                break
             itx += 1
-            time.sleep(1)
+            time.sleep(refresh_time)
 
-    @classmethod
+    @ classmethod
     def Pull_Processes(cls, process_table):
         try:
             with open(process_table, 'r+') as table:
@@ -225,7 +235,7 @@ if(__name__ == '__main__'):
     runtime = True
     clean_up = False
 
-    EXECUTION_TIME = 3
+    EXECUTION_TIME = 15
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
 
