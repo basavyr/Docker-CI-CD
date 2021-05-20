@@ -59,14 +59,14 @@ class Process:
         return output, errors
 
     @classmethod
-    def Save_Process_Output(cls, full_command, output_file):
-        # append the directory name for the relative path of the register
-        # dir_output_file = f'{Register.register_directory_name}/{output_file}'
+    def Save_Process_Output(cls, piped_command, output_file):
+        # execute the process and retrieve its output from the console
+        process = Process.Get_Process_Output(piped_command)
 
-        process = Process.Get_Process_Output(full_command)
         process_output = process[0]
         process_error = process[1]
-        decoded_output = 'x'
+
+        decoded_output = ''
         if(process_error == b''):
             return_code = 1
         else:
@@ -151,14 +151,14 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = True
+    clean_up = False
 
     total_execution_time = 5
-    start_time = time.time()
 
     itx = 1
     print(f'Starting iterations...')
 
+    start_time = time.time()
     while(runtime):
         for monitored_process in process_list:
             Register.Create_File_Register(
@@ -167,7 +167,7 @@ if(__name__ == '__main__'):
             runtime = False
         else:
             print(f'Iteration {itx}...')
-            time.sleep(2)
+            time.sleep(1)
         itx += 1
 
     if(clean_up):

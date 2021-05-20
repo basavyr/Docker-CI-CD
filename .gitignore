@@ -2,3 +2,4 @@
 *.lock
 *.pdf
 *machine_id
+*.list
