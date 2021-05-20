@@ -94,12 +94,23 @@ class Process:
         grepped_command = Process.Generate_Pipe(new_command_list)
         return grepped_command
 
+    @classmethod
+    def Count_Running_Instances(cls, process):
+        """
+        Count the number of running instances for a given process
+        """
+        process_path = f'{Register.register_directory_name}/{process}.list'
+        # print(process_path)
+        with open(process_path, 'r+') as process_reader:
+            lines = process_reader.readlines()
+        return len(lines)
+
 
 class Register:
 
     register_directory_name = 'register'
 
-    @classmethod
+    @ classmethod
     def Create_Register_Directory(cls, register_name):
         try:
             os.mkdir(register_name)
@@ -108,7 +119,7 @@ class Register:
             pass
         return
 
-    @classmethod
+    @ classmethod
     def Create_File_Register(cls, proc_name, command_list):
         debug_moode = 0
 
@@ -126,7 +137,7 @@ class Register:
             except Exception as exc:
                 print(f'Error: {exc}')
 
-    @classmethod
+    @ classmethod
     def Clean_Register_Directory(cls):
         dirr = Register.register_directory_name
         if(os.path.isdir(dirr)):
@@ -150,10 +161,15 @@ if(__name__ == '__main__'):
     # creating the directory where each instance of a process will be saved as a file
     Register.Create_Register_Directory(Register.register_directory_name)
 
-    runtime = True
+    runtime = False
     clean_up = False
 
     total_execution_time = 5
+
+    proc_name = 'bash'
+
+    process_instances = Process.Count_Running_Instances(proc_name)
+    print(f'There are {process_instances}-{proc_name} instances running...')
 
     itx = 1
     print(f'Starting iterations...')
