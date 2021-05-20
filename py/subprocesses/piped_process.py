@@ -36,7 +36,6 @@ class Piped_Process:
         """Execute a piped command after each argument has been properly added in the piped instruction
         Returns the output and the error of the executed command
         """
-
         piped_process = Piped_Process(proc_list).piped_command
         process = subprocess.Popen(piped_process, shell=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -51,7 +50,6 @@ class Piped_Process:
 
     @classmethod
     def Get_Process_Output(cls, piped_process):
-        # piped_process = Piped_Process.Generate_Pipe(proc_list)
         process = subprocess.Popen(piped_process, shell=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
@@ -62,11 +60,8 @@ class Piped_Process:
         return output, errors
 
     @classmethod
-    def Save_Process_Output(cls, process, process_list, output_file):
-        new_process = Piped_Process.Create_Process_Register(
-            process, process_list)
-        # print(new_process)
-        process = Piped_Process.Get_Process_Output(new_process)
+    def Save_Process_Output(cls, full_command, output_file):
+        process = Piped_Process.Get_Process_Output(full_command)
         process_output = process[0]
         process_error = process[1]
         decoded_output = 'x'
@@ -99,35 +94,39 @@ class Piped_Process:
 
 
 class Register:
+
+    @classmethod
+    def Create_Register_Directory(cls, register_name):
+        try:
+            os.mkdir(register_name)
+        except FileExistsError as err:
+            print(f'Could not make directory.\nReason: {err}')
+            return
+        return
+
     @classmethod
     def Create_File_Register(cls, proc_name, command_list):
         file_name = f'{proc_name}.list'
-        process_list = Piped_Process.Create_Process_Register(
+        full_command = Piped_Process.Create_Process_Register(
             proc_name, command_list)
+        print(full_command)
         with open(file_name, 'w+'):
             try:
                 Piped_Process.Save_Process_Output(
-                    proc_name, command_list, file_name)
+                    full_command, file_name)
             except Exception as exc:
                 print(f'Error: {exc}')
 
 
-full_command = ['ps aux', 'awk \'{print $2,$11}\'']
+command = ['ps aux', 'awk \'{print $2,$11}\'']
 
 process_list = ['logstash', 'ssh', 'python', 'bash']
 
 
-def Create_Register_Directory(register_name):
-    try:
-        os.mkdir(register_name)
-    except FileExistsError as err:
-        print(f'Could not make directory.\nReason: {err}')
-        return
-    return
-
-
 if(__name__ == '__main__'):
-    Create_Register_Directory('register')
+    proc=process_list[1]
+    print(f'Generate_Command_List -> {Piped_Process.Generate_Command_List(proc,command)}')
+    print(f'Create_Process_Register -> {Piped_Process.Create_Process_Register(proc,command)}')
     # for proc in process_list:
     # Piped_Process.Save_Process_Output(
     #     proc, command_list, output_file)
