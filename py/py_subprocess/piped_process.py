@@ -122,15 +122,16 @@ class Register:
 
     @classmethod
     def Clean_Register_Directory(cls):
-        if(os.path.isdir(Register.register_directory_name)):
-            y = os.listdir(Register.register_directory_name)
-            if(len(y) > 0):
-                for file in y:
-                    print(f'{y} <-{file}')
+        dirr = Register.register_directory_name
+        if(os.path.isdir(dirr)):
+            files = os.listdir(dirr)
+            if(len(files) > 0):
+                for file in files:
                     os.remove(
                         f'{Register.register_directory_name}/{os.path.relpath(file)}')
             else:
-                print('Process register empty. Skipping the cleaning procedure')
+                # print('Process register empty. Skipping the cleaning procedure')
+                pass
 
 
 command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
@@ -138,13 +139,11 @@ command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
 process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
-Register.Clean_Register_Directory()
+if(__name__ == '__main__'):
+    # creating the directory where each instance of a process will be saved as a file
+    Register.Create_Register_Directory(Register.register_directory_name)
 
-# if(__name__ == '__main__'):
-#     # creating the directory where each instance of a process will be saved as a file
-#     Register.Create_Register_Directory(Register.register_directory_name)
-
-#     runtime=True
+    # runtime=True
 
 #     total_execution_time=5
 #     start_time=time.time()
@@ -156,3 +155,5 @@ Register.Clean_Register_Directory()
 #             runtime=False
 #         else:
 #             time.sleep(1)
+
+    Register.Clean_Register_Directory()
