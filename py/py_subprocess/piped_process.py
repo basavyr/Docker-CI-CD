@@ -251,7 +251,7 @@ if(__name__ == '__main__'):
     runtime = True
     clean_up = True
 
-    EXECUTION_TIME = 15
+    EXECUTION_TIME = 30
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
 
