@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-pythonAppPath='py/get_process/'
-pythonApp='py_process.py'
+pythonAppPath='py/py_subprocess/'
+pythonApp='piped_process.py'
 releaseApp='process_app'
 export LANG=en_US.UTF8
 
@@ -13,4 +13,6 @@ pipenv install
 echo 'Running the python application within the current virtualenv'
 pipenv run python $pythonApp
 cd $HOME
+ls -l
 zip -r $releaseApp.zip $pythonAppPath
+ls -l
