@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 import os
-
+import time
 
 # decode bytes to string
 def decoder(x): return x.decode('UTF-8')
@@ -128,5 +128,15 @@ if(__name__ == '__main__'):
     # creating the directory where each instance of a process will be saved as a file
     Register.Create_Register_Directory(Register.register_directory_name)
 
-    for proc in process_list:
-        Register.Create_File_Register(proc, command)
+    runtime=True
+    
+    total_execution_time=5
+    start_time=time.time()
+
+    while(runtime):
+        for proc in process_list:
+            Register.Create_File_Register(proc, command)
+        if(time.time()-start_time>=total_execution_time):
+            runtime=False
+        else:
+            time.sleep(1)

@@ -1,7 +1,2 @@
-20321 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync
-20326 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync
-20331 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync
-20338 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync
-73543 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync
-286526 /bin/sh -c
-286528 grep bash
+74231 grep bash
+74229 /bin/sh -c
