@@ -124,9 +124,16 @@ process_list = ['logstash', 'ssh', 'python', 'bash']
 
 
 if(__name__ == '__main__'):
-    proc=process_list[1]
-    print(f'Generate_Command_List -> {Piped_Process.Generate_Command_List(proc,command)}')
-    print(f'Create_Process_Register -> {Piped_Process.Create_Process_Register(proc,command)}')
+    # creating the directory where each instance of a process will be saved as a file
+    Register.Create_Register_Directory('register')
+
+    proc = process_list[1]
+    print(
+        f'Generate_Command_List -> {Piped_Process.Generate_Command_List(proc,command)}')
+    print(
+        f'Create_Process_Register -> {Piped_Process.Create_Process_Register(proc,command)}')
+
+    Register.Create_File_Register(proc, command)
     # for proc in process_list:
     # Piped_Process.Save_Process_Output(
     #     proc, command_list, output_file)
