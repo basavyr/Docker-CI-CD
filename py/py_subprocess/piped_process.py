@@ -179,8 +179,11 @@ class Utils():
             print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
             for process in register:
+                number_of_instances = Process.Count_Running_Instances(process)
                 print(f'Analyzing running instances of {process}...')
-                print(f'{Process.Count_Running_Instances(process)} instances found')
+                print(f'{number_of_instances} instances found')
+                if(number_of_instances == -1):
+                    print(f'should remove the process from the register')
             print('\n')
             if(time.time() - start_time >= execution_time):
                 print('Total execution time reached.\nStopping the execution pipeline.')
