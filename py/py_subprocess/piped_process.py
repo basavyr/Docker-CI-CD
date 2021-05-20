@@ -20,7 +20,7 @@ class Process:
     #         self.piped_command = Process.Generate_Pipe(command_list)
 
     @classmethod
-    def Generate_Pipe(cls, command_list):
+    def Generate_Piped_Command(cls, command_list):
         piped_command = f''
         cmd_idx = 0
         for cmd in command_list:
@@ -82,17 +82,17 @@ class Process:
 
     @classmethod
     def Generate_Grepped_Command(cls, process, command_list):
-        grep_process = f'grep {process}'
+        grepped_process = f'grep {process}'
         new_command_list = list(command_list)
-        new_command_list.insert(1, grep_process)
+        new_command_list.insert(1, grepped_process)
         return new_command_list
 
     @classmethod
     def Create_Full_Command(cls, process, command_list):
-        new_command_list = Process.Generate_Grepped_Command(
+        grepped_command = Process.Generate_Grepped_Command(
             process, command_list)
-        grepped_command = Process.Generate_Pipe(new_command_list)
-        return grepped_command
+        piped_command = Process.Generate_Piped_Command(grepped_command)
+        return piped_command
 
     @classmethod
     def Count_Running_Instances(cls, process):
@@ -100,7 +100,6 @@ class Process:
         Count the number of running instances for a given process
         """
         process_path = f'{Register.register_directory_name}/{process}.list'
-        # print(process_path)
         try:
             with open(process_path, 'r+') as process_reader:
                 lines = process_reader.readlines()
@@ -179,11 +178,15 @@ class Utils():
             print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
             for process in register:
+                # create a file register from the process
+                Register.Create_File_Register(process,)
                 number_of_instances = Process.Count_Running_Instances(process)
+
                 print(f'Analyzing running instances of {process}...')
                 print(f'{number_of_instances} instances found')
                 if(number_of_instances == -1):
                     print(f'should remove the process from the register')
+
             print('\n')
             if(time.time() - start_time >= execution_time):
                 print('Total execution time reached.\nStopping the execution pipeline.')
