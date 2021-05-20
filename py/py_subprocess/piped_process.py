@@ -101,8 +101,11 @@ class Process:
         """
         process_path = f'{Register.register_directory_name}/{process}.list'
         # print(process_path)
-        with open(process_path, 'r+') as process_reader:
-            lines = process_reader.readlines()
+        try:
+            with open(process_path, 'r+') as process_reader:
+                lines = process_reader.readlines()
+        except FileNotFoundError:
+            return -1
         return len(lines)
 
 
@@ -168,19 +171,24 @@ class Utils():
 
         start_time = time.time()
         if(runtime):
-            print('Watching register')
+            print(f'Watching register -> {register}\n')
 
+        itx = 1
         # start the monitoring process
         while(runtime):
-            print(f'watching...')
-
+            print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
             for process in register:
-                print(process)
-
+                print(f'Analyzing running instances of {process}...')
+                print(f'{Process.Count_Running_Instances(process)} instances found')
+            print('\n')
             if(time.time() - start_time >= execution_time):
+                print('Total execution time reached.\nStopping the execution pipeline.')
                 runtime = False
                 break
+
+            itx += 1
+            time.sleep(1)
 
     @classmethod
     def Pull_Processes(cls, process_table):
@@ -200,32 +208,16 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = False
+    clean_up = True
 
-    total_execution_time = 5
+    EXECUTION_TIME = 5
 
-    PROCESS_LIST = Utils.Pull_Processes(Utils.process_table)
+    REGISTER = Utils.Pull_Processes(Utils.process_table)
 
-    itx = 1
-    print(f'Starting iterations...')
-
-    start_time = time.time()
-    while(runtime):
-        print(f'Iteration {itx}...')
-        for monitored_process in PROCESS_LIST:
-            print(f'Will monitor -> {monitored_process}')
-
-        if(int(time.time() - start_time) < total_execution_time):
-            time.sleep(1)
-        else:
-            runtime = False
-        itx += 1
-
-#     process_instances = Process.Count_Running_Instances(proc_name)
-#     print(f'There are {process_instances}-{proc_name} instances running...')
+    Utils.Watch_Process_Register(REGISTER, EXECUTION_TIME)
 
     if(clean_up):
-        print('Doing cleanup')
+        print('Doing registry cleanup')
         # cleaning up the register
         # removing the files in which all running processes are stored
         Register.Clean_Register_Directory()
