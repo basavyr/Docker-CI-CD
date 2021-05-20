@@ -1,0 +1,15 @@
+29225 /var/lib/snapd/snap/code/65/usr/share/code/code --force-user-env
+29227 /var/lib/snapd/snap/code/65/usr/share/code/code --type=zygote
+29228 /var/lib/snapd/snap/code/65/usr/share/code/code --type=zygote
+29263 /var/lib/snapd/snap/code/65/usr/share/code/code --type=gpu-process
+29273 /var/lib/snapd/snap/code/65/usr/share/code/code --type=utility
+29305 /var/lib/snapd/snap/code/65/usr/share/code/code --type=renderer
+29412 /var/lib/snapd/snap/code/65/usr/share/code/code --inspect-port=0
+29428 /var/lib/snapd/snap/code/65/usr/share/code/code --type=renderer
+29455 /var/lib/snapd/snap/code/65/usr/share/code/code /var/lib/snapd/snap/code/65/usr/share/code/resources/app/out/bootstrap-fork
+29473 /var/lib/snapd/snap/code/65/usr/share/code/code /var/lib/snapd/snap/code/65/usr/share/code/resources/app/out/bootstrap-fork
+29655 /var/lib/snapd/snap/code/65/usr/share/code/code /var/lib/snapd/snap/code/65/usr/share/code/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain
+29943 /var/lib/snapd/snap/code/65/usr/share/code/code /home/robertpoenaru/.vscode/extensions/ms-python.vscode-pylance-2021.5.2/dist/server.bundle.js
+90405 /snap/signal-desktop/354/opt/Signal/signal-desktop --type=renderer
+286530 /bin/sh -c
+286532 grep code

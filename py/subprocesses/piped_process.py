@@ -1,14 +1,10 @@
 #!/usr/bin/env python
 import subprocess
 import os
+
+
 # decode bytes to string
-
-
 def decoder(x): return x.decode('UTF-8')
-
-
-# the file where command output will be saved
-output_file = 'results.out'
 
 
 class Piped_Process:
@@ -61,6 +57,9 @@ class Piped_Process:
 
     @classmethod
     def Save_Process_Output(cls, full_command, output_file):
+        # append the directory name for the relative path of the register
+        # dir_output_file = f'{Register.register_directory_name}/{output_file}'
+
         process = Piped_Process.Get_Process_Output(full_command)
         process_output = process[0]
         process_error = process[1]
@@ -95,6 +94,8 @@ class Piped_Process:
 
 class Register:
 
+    register_directory_name = 'register'
+
     @classmethod
     def Create_Register_Directory(cls, register_name):
         try:
@@ -106,10 +107,10 @@ class Register:
 
     @classmethod
     def Create_File_Register(cls, proc_name, command_list):
-        file_name = f'{proc_name}.list'
+        file_name = f'{Register.register_directory_name}/{proc_name}.list'
         full_command = Piped_Process.Create_Process_Register(
             proc_name, command_list)
-        print(full_command)
+        print(f'Full command: {full_command}')
         with open(file_name, 'w+'):
             try:
                 Piped_Process.Save_Process_Output(
@@ -118,26 +119,14 @@ class Register:
                 print(f'Error: {exc}')
 
 
-command = ['ps aux', 'awk \'{print $2,$11}\'']
+command = ['ps aux', 'awk \'{print $2,$11,$12}\'']
 
-process_list = ['logstash', 'ssh', 'python', 'bash']
+process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
 if(__name__ == '__main__'):
     # creating the directory where each instance of a process will be saved as a file
-    Register.Create_Register_Directory('register')
+    Register.Create_Register_Directory(Register.register_directory_name)
 
-    proc = process_list[1]
-    print(
-        f'Generate_Command_List -> {Piped_Process.Generate_Command_List(proc,command)}')
-    print(
-        f'Create_Process_Register -> {Piped_Process.Create_Process_Register(proc,command)}')
-
-    Register.Create_File_Register(proc, command)
-    # for proc in process_list:
-    # Piped_Process.Save_Process_Output(
-    #     proc, command_list, output_file)
-    # yy = Piped_Process.Create_Process_Register(
-    #     proc, command_list, output_file)
-    # print(yy)
-    # Register.Create_File_Register(proc, command_list)
+    for proc in process_list:
+        Register.Create_File_Register(proc, command)
