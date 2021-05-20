@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import subprocess
-
+import os
 # decode bytes to string
 
 
@@ -112,19 +112,26 @@ class Register:
                 print(f'Error: {exc}')
 
 
-command_list = ['ps aux', 'awk \'{print $2,$11}\'']
+full_command = ['ps aux', 'awk \'{print $2,$11}\'']
 
 process_list = ['logstash', 'ssh', 'python', 'bash']
-# process_list = ['bash']
 
-initial_list = command_list
+
+def Create_Register_Directory(register_name):
+    try:
+        os.mkdir(register_name)
+    except FileExistsError as err:
+        print(f'Could not make directory.\nReason: {err}')
+        return
+    return
 
 
 if(__name__ == '__main__'):
-    for proc in process_list:
-        # Piped_Process.Save_Process_Output(
-        #     proc, command_list, output_file)
-        # yy = Piped_Process.Create_Process_Register(
-        #     proc, command_list, output_file)
-        # print(yy)
-        Register.Create_File_Register(proc, command_list)
+    Create_Register_Directory('register')
+    # for proc in process_list:
+    # Piped_Process.Save_Process_Output(
+    #     proc, command_list, output_file)
+    # yy = Piped_Process.Create_Process_Register(
+    #     proc, command_list, output_file)
+    # print(yy)
+    # Register.Create_File_Register(proc, command_list)
