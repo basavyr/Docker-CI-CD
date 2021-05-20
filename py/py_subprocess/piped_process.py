@@ -182,7 +182,7 @@ class Utils():
 
         itx = 1
         # start the monitoring process
-        while(runtime):
+        while(runtime and time.time()-start_time < execution_time):
             print(f'Iteration {itx}...')
             # count the running instances for each process that exists in the registry
             for process in register:
@@ -190,16 +190,17 @@ class Utils():
                 Register.Create_File_Register(process, Process.command_list)
                 number_of_instances = Process.Count_Running_Instances(process)
 
-                print(f'Analyzing running instances of {process}...')
-                print(f'{number_of_instances} instances found')
+                print(f'Monitoring {process} process...')
+                print(
+                    f'{number_of_instances} running instances for {process} found.')
                 if(number_of_instances == -1):
                     print(f'should remove the process from the register')
 
             print('\n')
-            if(time.time() - start_time >= execution_time):
-                print('Total execution time reached.\nStopping the execution pipeline.')
-                runtime = False
-                break
+            # if(time.time() - start_time >= execution_time):
+            #     print('Total execution time reached.\nStopping the execution pipeline.')
+            #     runtime = False
+            #     break
 
             itx += 1
             time.sleep(1)
@@ -224,7 +225,7 @@ if(__name__ == '__main__'):
     runtime = True
     clean_up = False
 
-    EXECUTION_TIME = 1
+    EXECUTION_TIME = 3
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
 
