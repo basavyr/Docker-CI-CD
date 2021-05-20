@@ -143,17 +143,21 @@ if(__name__ == '__main__'):
     # creating the directory where each instance of a process will be saved as a file
     Register.Create_Register_Directory(Register.register_directory_name)
 
-    # runtime=True
+    runtime = True
 
-#     total_execution_time=5
-#     start_time=time.time()
+    clean_up = False
 
-#     while(runtime):
-#         for proc in process_list:
-#             Register.Create_File_Register(proc, command)
-#         if(time.time()-start_time>=total_execution_time):
-#             runtime=False
-#         else:
-#             time.sleep(1)
+    total_execution_time = 5
+    start_time = time.time()
 
-    Register.Clean_Register_Directory()
+    while(runtime):
+        for proc in process_list:
+            Register.Create_File_Register(proc, command)
+        if(time.time() - start_time >= total_execution_time):
+            runtime = False
+        else:
+            time.sleep(2)
+
+    if(clean_up):
+        print('Doing cleanup')
+        Register.Clean_Register_Directory()

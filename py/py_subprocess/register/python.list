@@ -1,0 +1,6 @@
+86697 /Users/robertpoenaru/.pyenv/versions/3.8.6/bin/python ./piped_process.py
+89317 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.829140558/pythonFiles/pyvsc-run-isolated.py
+86820 grep python
+86818 /bin/sh -c
+85559 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.829140558/pythonFiles/lib/python/jedi/inference/compiled/subprocess/__main__.py
+84944 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.829140558/pythonFiles/lib/python/jedi/inference/compiled/subprocess/__main__.py
