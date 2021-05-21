@@ -111,6 +111,13 @@ class Process:
             return -1
         return len(lines)-2
 
+    @classmethod
+    def Analyze_Process_Stack(cls, process_list, process_stack):
+        """
+        Determines which process has modified the running instances
+        """
+        print(f'will perform analysis on the instance stack')
+
 
 class Register:
 
@@ -183,6 +190,8 @@ class Utils():
 
         runtime = True
 
+        dry_run = 1
+
         start_time = time.time()
         if(runtime):
             print(f'Monitoring -> {register}\n')
@@ -199,26 +208,25 @@ class Utils():
             # if(debug_mode):
             print(f'Iteration {itx}...')
 
-            # create a file register from the process
+            # create a file register where all running instances for each process within the process list will be saved
             for process in register:
                 Register.Create_File_Register(process, Process.command_list)
 
-            # count the running instances for each process that exists in the registry
+            # count the running instances of all processes
             current_instance_number = [Process.Count_Running_Instances(
                 process) for process in register]
-            if(debug_mode):
-                print(current_instance_number)
+            if(debug_mode and dry_run == 0):
+                print(f'The current process stack: {current_instance_number}')
 
-            if(debug_mode):
-                print(f'before monitoring -> {last_instance_number}')
-                print(f'after monitoring -> {current_instance_number}')
-
-            diffs = [last_instance_number[idx]-current_instance_number[idx]
+            # calculate the difference between the previous instance stack and the current instance stack for all processes
+            diffs = [current_instance_number[idx]-last_instance_number[idx]
                      for idx in range(len(register))]
 
-            if(itx > 1):
-                if(debug_mode):
-                    print(f'changes -> {diffs}')
+            if(itx > 1 and dry_run == 0):
+                # if(debug_mode):
+                print(
+                    f'Analyzing the instance stack\nChanges in instances{diffs}')
+                Process.Analyze_Process_Stack(register, diffs)
 
             last_instance_number = list(current_instance_number)
 
@@ -234,6 +242,7 @@ class Utils():
             #     runtime = False
             #     break
             itx += 1
+            dry_run = 0
             time.sleep(refresh_time)
 
     @ classmethod
