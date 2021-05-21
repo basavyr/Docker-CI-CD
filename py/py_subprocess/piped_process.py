@@ -167,21 +167,21 @@ class Register:
 
     @ classmethod
     def Create_File_Register(cls, proc_name, command_list):
-        debug_moode = 0
+        debug_mode = 0
 
         # generate the path where all the running instances will be saved
-        if(debug_moode):
+        if(debug_mode):
             print('Creating the proper path to the process list file')
         file_name = f'{Register.register_directory_name}/{proc_name}.list'
 
         # with the path to the file active
         # generates the command that will be executed
-        if(debug_moode):
+        if(debug_mode):
             print(
                 'Generating the proper command that has to be executed within the CLI for the current process')
         full_command = Process.Create_Full_Command(
             proc_name, command_list)
-        if(debug_moode):
+        if(debug_mode):
             print(f'Full command: {full_command}')
 
         with open(file_name, 'w+'):
