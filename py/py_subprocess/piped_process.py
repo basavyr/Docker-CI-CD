@@ -112,20 +112,24 @@ class Process:
         return len(lines) - 2
 
     @classmethod
-    def Analyze_Process_Stack(cls, process_list, process_stack):
+    def Analyze_Process_Stack(cls, process_list, running_instances, process_stack):
         """
         Determines which process has modified the running instances
         """
         print(f'will perform analysis on the instance stack')
 
+        idx = 0
+
         for process in zip(process_list, process_stack):
             p_name = process[0]
             p_instances = process[1]
             if(p_instances == 0):
-                print(f'{p_name} has the same instances running')
+                print(
+                    f'{p_name} has no running instances')
             else:
                 print(
-                    f'the following process was changed: {p_name} -> {p_instances}')
+                    f'Change for [{p_name}] -> from ({running_instances[idx]-p_instances}) to ({running_instances[idx]}) instances')
+            idx += 1
 
 
 class Register:
@@ -237,21 +241,11 @@ class Utils():
                 # if(debug_mode):
                 print(
                     f'Analyzing the instance stack\nChanges in instances {diffs}')
-                Process.Analyze_Process_Stack(register, diffs)
+                Process.Analyze_Process_Stack(
+                    register, current_instance_number, diffs)
 
             last_instance_number = list(current_instance_number)
 
-            # print(f'Monitoring {process} process...')
-            #     print(
-            #         f'{number_of_instances} running instances for {process} found.')
-            #     if(number_of_instances == -1):
-            #         print(f'should remove the process from the register')
-
-            # print('\n')
-            # if(time.time() - start_time >= execution_time):
-            #     print('Total execution time reached.\nStopping the execution pipeline.')
-            #     runtime = False
-            #     break
             itx += 1
             dry_run = 0
             time.sleep(refresh_time)
