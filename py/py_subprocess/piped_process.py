@@ -136,16 +136,16 @@ class Process:
             else:
                 if(p_instances > 0):
                     # depending on wether the value of the process stack is positive or negative, show proper output to the screen
-                    initial_instances = p_instances - running_instances[idx]
+                    initial_instances = running_instances[idx] - p_instances
                     current_instances = running_instances[idx]
                     print(
-                        f'Change for [{p_name}] -> from ({current_instances}) to ({running_instances[idx]}) instances')
+                        f'Change for [{p_name}] -> from ({initial_instances}) to ({current_instances}) instances')
                 elif(p_instances < 0):
                     # depending on wether the value of the process stack is positive or negative, show proper output to the screen
                     initial_instances = running_instances[idx] - p_instances
                     current_instances = running_instances[idx]
                     print(
-                        f'Change for [{p_name}] -> from ({running_instances[idx]-p_instances}) to ({running_instances[idx]}) instances')
+                        f'Change for [{p_name}] -> from ({initial_instances}) to ({current_instances}) instances')
 
                 if(debug_mode):
                     print(
