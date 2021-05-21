@@ -147,9 +147,9 @@ class Process:
                     print(
                         f'Change for [{p_name}] -> from ({initial_instances}) to ({current_instances}) instances')
 
-                if(debug_mode):
-                    print(
-                        f'{p_name} had {initial_instances} and now it has {current_instances}')
+                # if(debug_mode):
+                #     print(
+                #         f'{p_name} had {initial_instances} and now it has {current_instances}')
 
                 if(p_instances < 0):
                     print(f'a {p_name} instance has stopped...')
@@ -267,14 +267,14 @@ class Utils():
                          for idx in range(len(register))]
 
             if(itx > 1 and dry_run == 0):
-                # if(debug_mode):
-                print(
-                    f'Analyzing the instance stack\nChanges in instances {diffs}')
+                if(debug_mode):
+                    print(
+                        f'Analyzing the instance stack\nChanges in instances {diffs}')
                 Process.Analyze_Process_Stack(
                     register, current_instance_number, diffs)
 
-            print(
-                f'the last instances for each process:\n{last_instance_number}')
+            # print(
+            #     f'the last instances for each process:\n{last_instance_number}')
             last_instance_number = list(current_instance_number)
 
             itx += 1
