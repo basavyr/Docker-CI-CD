@@ -178,11 +178,14 @@ class Utils():
 
     @classmethod
     def Watch_Process_Register(cls, register, execution_time):
+
+        debug_mode = False
+
         runtime = True
 
         start_time = time.time()
         if(runtime):
-            print(f'Watching register -> {register}\n')
+            print(f'Monitoring -> {register}\n')
 
         # setup the time after which the script checks for running instances again
         refresh_time = 5
@@ -193,22 +196,29 @@ class Utils():
         itx = 1
         # start the monitoring process
         while(runtime and now()-start_time < execution_time):
+            # if(debug_mode):
             print(f'Iteration {itx}...')
+
+            # create a file register from the process
             for process in register:
-                # create a file register from the process
                 Register.Create_File_Register(process, Process.command_list)
+
             # count the running instances for each process that exists in the registry
             current_instance_number = [Process.Count_Running_Instances(
                 process) for process in register]
-            print(current_instance_number)
+            if(debug_mode):
+                print(current_instance_number)
 
-            print(f'before monitoring -> {last_instance_number}')
-            print(f'after monitoring -> {current_instance_number}')
+            if(debug_mode):
+                print(f'before monitoring -> {last_instance_number}')
+                print(f'after monitoring -> {current_instance_number}')
 
             diffs = [last_instance_number[idx]-current_instance_number[idx]
                      for idx in range(len(register))]
+
             if(itx > 1):
-                print(f'changes -> {diffs}')
+                if(debug_mode):
+                    print(f'changes -> {diffs}')
 
             last_instance_number = list(current_instance_number)
 
@@ -223,10 +233,6 @@ class Utils():
             #     print('Total execution time reached.\nStopping the execution pipeline.')
             #     runtime = False
             #     break
-            if(now()-start_time >= execution_time):
-                print('Finishing monitoring processes...')
-                runtime = False
-                break
             itx += 1
             time.sleep(refresh_time)
 
