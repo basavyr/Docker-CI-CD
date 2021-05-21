@@ -131,7 +131,7 @@ class Process:
             if(p_instances == 0):
                 if(debug_mode):
                     print(
-                        f'{p_name} has no running instances')
+                        f'{p_name} has no running instances') #! the p_instances null does not mean that there are no running instances
                 continue
             else:
                 if(p_instances > 0):
@@ -256,10 +256,14 @@ class Utils():
             # count the running instances of all processes
             current_instance_number = [Process.Count_Running_Instances(
                 process) for process in register]
-            print(
-                f'the current instances for all processes:\n{current_instance_number}')
+            if(debug_mode):
+                print(
+                    f'the current instances for all processes:\n{current_instance_number}')
             if(debug_mode and dry_run == 0):
-                print(f'The current process stack: {current_instance_number}')
+                if(debug_mode):
+                    print(
+                        f'The current process stack: {current_instance_number}')
+                pass
 
             # calculate the difference between the previous instance stack and the current instance stack for all processes
             if(dry_run == 0):
