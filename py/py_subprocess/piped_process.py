@@ -250,6 +250,8 @@ class Utils():
             # count the running instances of all processes
             current_instance_number = [Process.Count_Running_Instances(
                 process) for process in register]
+            print(
+                f'the current instances for all processes:\n{current_instance_number}')
             if(debug_mode and dry_run == 0):
                 print(f'The current process stack: {current_instance_number}')
 
@@ -265,6 +267,8 @@ class Utils():
                 Process.Analyze_Process_Stack(
                     register, current_instance_number, diffs)
 
+            print(
+                f'the last instances for each process:\n{last_instance_number}')
             last_instance_number = list(current_instance_number)
 
             itx += 1
