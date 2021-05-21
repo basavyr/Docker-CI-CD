@@ -254,8 +254,9 @@ class Utils():
                 print(f'The current process stack: {current_instance_number}')
 
             # calculate the difference between the previous instance stack and the current instance stack for all processes
-            diffs = [current_instance_number[idx] - last_instance_number[idx]
-                     for idx in range(len(register))]
+            if(dry_run == 0):
+                diffs = [current_instance_number[idx] - last_instance_number[idx]
+                         for idx in range(len(register))]
 
             if(itx > 1 and dry_run == 0):
                 # if(debug_mode):
