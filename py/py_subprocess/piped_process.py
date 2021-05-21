@@ -140,9 +140,14 @@ class Process:
                 # depending on wether the value of the process stack is positive or negative, show proper output to the screen
                 initial_instances = running_instances[idx]-p_instances
                 current_instances = running_instances[idx]
-                if(p_instances > 0):
+
+                if(debug_mode):
+                    print(
+                        f'{p_name} had {initial_instances} and now it has {current_instances}')
+
+                if(p_instances < 0):
                     print(f'a {p_name} instance has stopped...')
-                elif(p_instances < 0):
+                elif(p_instances > 0):
                     print(f'a {p_name} instance has spawned...')
             idx += 1
 
