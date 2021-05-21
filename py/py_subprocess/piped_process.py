@@ -109,7 +109,7 @@ class Process:
                 lines = process_reader.readlines()
         except FileNotFoundError:
             return -1
-        return len(lines)-2
+        return len(lines) - 2
 
     @classmethod
     def Analyze_Process_Stack(cls, process_list, process_stack):
@@ -185,11 +185,13 @@ class Utils():
 
     @classmethod
     def Watch_Process_Register(cls, register, execution_time):
-
+        # set true for console print
         debug_mode = False
 
+        # set true for monitoring
         runtime = True
 
+        # avoid any instance counting during the first run of the script
         dry_run = 1
 
         start_time = time.time()
@@ -204,7 +206,7 @@ class Utils():
 
         itx = 1
         # start the monitoring process
-        while(runtime and now()-start_time < execution_time):
+        while(runtime and now() - start_time < execution_time):
             # if(debug_mode):
             print(f'Iteration {itx}...')
 
@@ -219,13 +221,13 @@ class Utils():
                 print(f'The current process stack: {current_instance_number}')
 
             # calculate the difference between the previous instance stack and the current instance stack for all processes
-            diffs = [current_instance_number[idx]-last_instance_number[idx]
+            diffs = [current_instance_number[idx] - last_instance_number[idx]
                      for idx in range(len(register))]
 
             if(itx > 1 and dry_run == 0):
                 # if(debug_mode):
                 print(
-                    f'Analyzing the instance stack\nChanges in instances{diffs}')
+                    f'Analyzing the instance stack\nChanges in instances {diffs}')
                 Process.Analyze_Process_Stack(register, diffs)
 
             last_instance_number = list(current_instance_number)
@@ -264,7 +266,7 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = True
+    clean_up = False
 
     EXECUTION_TIME = 30
 
