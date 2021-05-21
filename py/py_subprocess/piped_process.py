@@ -118,6 +118,15 @@ class Process:
         """
         print(f'will perform analysis on the instance stack')
 
+        for process in zip(process_list, process_stack):
+            p_name = process[0]
+            p_instances = process[1]
+            if(p_instances == 0):
+                print(f'{p_name} has the same instances running')
+            else:
+                print(
+                    f'the following process was changed: {p_name} -> {p_instances}')
+
 
 class Register:
 
