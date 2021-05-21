@@ -115,8 +115,13 @@ class Process:
     def Analyze_Process_Stack(cls, process_list, running_instances, process_stack):
         """
         Determines which process has modified the running instances
+        For all the processes within the register, see which one had modified instances during monitoring process
         """
-        print(f'will perform analysis on the instance stack')
+
+        debug_mode = True
+
+        if(debug_mode):
+            print(f'will perform analysis on the instance stack')
 
         idx = 0
 
@@ -124,11 +129,21 @@ class Process:
             p_name = process[0]
             p_instances = process[1]
             if(p_instances == 0):
-                print(
-                    f'{p_name} has no running instances')
+                if(debug_mode):
+                    print(
+                        f'{p_name} has no running instances')
+                continue
             else:
-                print(
-                    f'Change for [{p_name}] -> from ({running_instances[idx]-p_instances}) to ({running_instances[idx]}) instances')
+                if(debug_mode):
+                    print(
+                        f'Change for [{p_name}] -> from ({running_instances[idx]-p_instances}) to ({running_instances[idx]}) instances')
+                # depending on wether the value of the process stack is positive or negative, show proper output to the screen
+                initial_instances = running_instances[idx]-p_instances
+                current_instances = running_instances[idx]
+                if(p_instances > 0):
+                    print(f'a {p_name} instance has stopped...')
+                elif(p_instances < 0):
+                    print(f'a {p_name} instance has spawned...')
             idx += 1
 
 
