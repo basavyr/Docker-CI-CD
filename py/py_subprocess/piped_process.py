@@ -124,8 +124,8 @@ class Process:
 
         debug_mode = True
 
-        if(debug_mode):
-            print(f'will perform analysis on the instance stack')
+        # if(debug_mode):
+        #     print(f'will perform analysis on the instance stack')
 
         idx = 0
 
@@ -135,7 +135,7 @@ class Process:
             if(p_instances == 0):
                 if(debug_mode):
                     print(
-                        f'{p_name} has no running instances')  # ! the p_instances null does not mean that there are no running instances
+                        f'{p_name} has no changes within its active instances...')  # ! the p_instances null does not mean that there are no running instances
                 continue
             else:
                 if(p_instances > 0):
