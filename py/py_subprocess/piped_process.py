@@ -122,12 +122,17 @@ class Process:
         The process stack shows the difference between the current active instances of a process and the active instances which were running during the previous iteration
         """
 
-        debug_mode = True
+        debug_mode = False
 
-        # if(debug_mode):
-        #     print(f'will perform analysis on the instance stack')
+        if(debug_mode):
+            print(f'will perform analysis on the instance stack')
 
         idx = 0
+
+        if(any(process_stack)):
+            print('there are changes within active instances')
+        else:
+            print('there are no changes in the active instances')
 
         for process in zip(process_list, process_stack):
             p_name = process[0]
@@ -281,8 +286,9 @@ class Utils():
                 Process.Analyze_Process_Stack(
                     register, current_instance_number, diffs)
 
-            # print(
-            #     f'the last instances for each process:\n{last_instance_number}')
+            if(debug_mode):
+                print(
+                    f'the last instances for each process:\n{last_instance_number}')
             last_instance_number = list(current_instance_number)
 
             itx += 1
