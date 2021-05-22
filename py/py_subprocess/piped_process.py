@@ -268,7 +268,7 @@ class Utils():
         if(runtime):
             print(f'Monitoring -> {register}\n')
 
-        # setup the time after which the script checks for running instances again
+        # the time after which another monitoring iteration is started
         refresh_time = 5
 
         current_instance_number = [0 for _ in register]
@@ -316,6 +316,7 @@ class Utils():
             itx += 1
             dry_run = 0
             time.sleep(refresh_time)
+        print('Finished monitoring the process register')
 
     @ classmethod
     def Pull_Processes(cls, process_table):
@@ -338,7 +339,7 @@ if(__name__ == '__main__'):
     runtime = True
     clean_up = False
 
-    EXECUTION_TIME = 30
+    EXECUTION_TIME = 40
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
 
