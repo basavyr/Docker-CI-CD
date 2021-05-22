@@ -180,9 +180,11 @@ class Process:
                 #         f'{p_name} had {initial_instances} and now it has {current_instances}')
 
                 if(p_instances < 0):
-                    print(f'a {p_name} instance has stopped...')
+                    print(
+                        f'({abs(p_instances)}) [{p_name}] instances stopped running...')
                 elif(p_instances > 0):
-                    print(f'a {p_name} instance has spawned...')
+                    print(
+                        f'({abs(p_instances)}) new [{p_name}] instances started running...')
             idx += 1
 
 
