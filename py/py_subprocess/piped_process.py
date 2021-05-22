@@ -339,8 +339,10 @@ if(__name__ == '__main__'):
     Register.Create_Register_Directory(Register.register_directory_name)
 
     runtime = True
-    clean_up = False
+    # clean up the register files after the monitoring tool has finished its pipeline
+    clean_up = True
 
+    # total runtie of the monitoring tool
     EXECUTION_TIME = 40
 
     REGISTER = Utils.Pull_Processes(Utils.process_table)
