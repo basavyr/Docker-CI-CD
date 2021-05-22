@@ -116,6 +116,16 @@ class Process:
         return len(lines) - 2
 
     @classmethod
+    def Process_Instance_Behavior(cls, process, instance_number):
+        if(instance_number < 0):
+            print(
+                f'there are stopped instances for {process}...Will raise alert')
+        elif (instance_number == 0):
+            print(f'{process} does not have modified instances...')
+        else:
+            print(f'{process} has increased instances with normal behavior...')
+
+    @classmethod
     def Analyze_Process_Stack(cls, process_list, running_instances, process_stack):
         """
         Determines if a process has changed its number of running instances
@@ -179,12 +189,13 @@ class Process:
                 #     print(
                 #         f'{p_name} had {initial_instances} and now it has {current_instances}')
 
-                if(p_instances < 0):
-                    print(
-                        f'({abs(p_instances)}) [{p_name}] instances stopped running...')
-                elif(p_instances > 0):
-                    print(
-                        f'({abs(p_instances)}) new [{p_name}] instances started running...')
+                Process.Process_Instance_Behavior(p_name, p_instances)
+                # if(p_instances < 0):
+                #     print(
+                #         f'({abs(p_instances)}) [{p_name}] instances stopped running...')
+                # elif(p_instances > 0):
+                #     print(
+                #         f'({abs(p_instances)}) new [{p_name}] instances started running...')
             idx += 1
 
 
