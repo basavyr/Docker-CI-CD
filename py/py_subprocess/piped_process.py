@@ -114,8 +114,12 @@ class Process:
     @classmethod
     def Analyze_Process_Stack(cls, process_list, running_instances, process_stack):
         """
-        Determines which process has modified the running instances
-        For all the processes within the register, see which one had modified instances during monitoring process
+        Determines if a process has changed its number of running instances
+
+
+        The method goes through each process separately, it creates a tuple with the process name and the process stack
+
+        The process stack shows the difference between the current active instances of a process and the active instances which were running during the previous iteration
         """
 
         debug_mode = True
@@ -131,7 +135,7 @@ class Process:
             if(p_instances == 0):
                 if(debug_mode):
                     print(
-                        f'{p_name} has no running instances') #! the p_instances null does not mean that there are no running instances
+                        f'{p_name} has no running instances')  # ! the p_instances null does not mean that there are no running instances
                 continue
             else:
                 if(p_instances > 0):
