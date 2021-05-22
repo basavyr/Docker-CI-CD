@@ -349,18 +349,28 @@ if(__name__ == '__main__'):
     # creating the directory where each instance of a process will be saved as a file
     Register.Create_Register_Directory(Register.register_directory_name)
 
-    runtime = True
     # clean up the register files after the monitoring tool has finished its pipeline
     clean_up = True
 
     # total runtie of the monitoring tool
     EXECUTION_TIME = 40
 
-    REGISTER = Utils.Pull_Processes(Utils.process_table)
+    runtime = True
 
-    Utils.Watch_Process_Register(REGISTER, EXECUTION_TIME)
+    try:
+        REGISTER = Utils.Pull_Processes(Utils.process_table)
+        assert REGISTER != -1, 'Process table missing. Cannot start the monitoring process'
+    except AssertionError:
+        runtime = False
+    else:
+        pass
 
-    if(clean_up):
+    if(runtime):
+        Utils.Watch_Process_Register(REGISTER, EXECUTION_TIME)
+    else:
+        print('Could not start the monitoring process due to missing process table.')
+
+    if(clean_up and runtime):
         print('Doing registry cleanup')
         # cleaning up the register
         # removing the files in which all running processes are stored
