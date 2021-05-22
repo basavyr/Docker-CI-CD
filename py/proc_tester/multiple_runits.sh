@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-iterations="$1"
-processName="python"
-ls_com="ls"
-runtime="nohup python runit.py &>/dev/null &" 
-direct_runtime="python runit.py &>/dev/null &"
+iterations="$1" #number of python scripts that will be spawned simultaneously
 
-echo "Will spawn $cmd $processName instances"
+processName="python"
+runtime="nohup python runit.py &>/dev/null &" 
+direct_runtime="nohup ./runit.py &>/dev/null &"
+
+echo "Will spawn $cmd $processName instances"wwww
 for ((c=1; c<=$iterations;c++))
 do
-nohup ./runit.py &>/dev/null &
+nohup ./runit.py 10 &>/dev/null & #if the execution of the python script is called via the variables with $, the script waits for every script instance to finish
 done
