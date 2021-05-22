@@ -109,6 +109,10 @@ class Process:
                 lines = process_reader.readlines()
         except FileNotFoundError:
             return -1
+
+        # when the script is running from the command line, the shell comands given in the script are executed within the python module -> this introduces the spawn of /bin/sh
+        # the grep command which is executed from within python will also count as a command within each process register file
+        # thus, the overall overhead of two extra commands must be subtracted from each register file
         return len(lines) - 2
 
     @classmethod
@@ -142,10 +146,13 @@ class Process:
             pass
 
         if(unchanged_instances == False):
-            print('no changes in the running instances. aborting...')
+            if(debug_mode):
+                print('no changes in the running instances. aborting...')
             return
 
-        print('continue analysis [no_abort]')
+        if(debug_mode):
+            print('continue analysis [no_abort]')
+
         for process in zip(process_list, process_stack):
             p_name = process[0]
             p_instances = process[1]
@@ -239,7 +246,10 @@ process_list = ['logstash', 'ssh', 'python', 'bash', 'code']
 
 
 class Utils():
-    """functions that are used for monitoring running processes, and any occuring instances within the process tree"""
+    """Functions and implementations that are used for monitoring running processes
+
+    All the occuring instances within the process tree are monitored
+    """
 
     process_table = 'process.table'
 
@@ -279,7 +289,7 @@ class Utils():
                 process) for process in register]
             if(debug_mode):
                 print(
-                    f'the current instances for all processes:\n{current_instance_number}')
+                    f'The current instances for all processes:\n{current_instance_number}')
             if(debug_mode and dry_run == 0):
                 if(debug_mode):
                     print(
@@ -300,7 +310,7 @@ class Utils():
 
             if(debug_mode):
                 print(
-                    f'the last instances for each process:\n{last_instance_number}')
+                    f'The last instances for each process:\n{last_instance_number}')
             last_instance_number = list(current_instance_number)
 
             itx += 1
