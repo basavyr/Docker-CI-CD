@@ -129,11 +129,23 @@ class Process:
 
         idx = 0
 
-        if(any(process_stack)):
-            print('there are changes within active instances')
-        else:
-            print('there are no changes in the active instances')
+        # assume there are no changes within the active instances for each process
+        unchanged_instances = False
 
+        if(any(process_stack)):
+            if(debug_mode):
+                print('there are changes within active instances')
+            unchanged_instances = True
+        else:
+            if(debug_mode):
+                print('there are no changes in the active instances')
+            pass
+
+        if(unchanged_instances == False):
+            print('no changes in the running instances. aborting...')
+            return
+
+        print('continue analysis [no_abort]')
         for process in zip(process_list, process_stack):
             p_name = process[0]
             p_instances = process[1]
