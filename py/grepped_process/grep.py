@@ -26,7 +26,7 @@ def RunCommand(command):
     return output, errors
 
 
-listed_command = ["dmesg"]
+listed_command = "dmesg --help"
 string_command = "ls -la"
 
 print(RunCommand(listed_command))
