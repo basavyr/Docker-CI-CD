@@ -20,10 +20,8 @@ def RunCommand(command):
     except OSError as error:
         print(f'There was an issue with running the command.\n{error}')
 
-    # the command should stop after the try/except block
-    # check_finish = executed_command.poll()
-    # return_code = executed_command.returncode
-    # print(f'Finished status: {check_finish}\nReturn code: {return_code}')
+    command_name = command[0]
+    Save_Output(command_name,output)
     Check_Command_Status(executed_command)
 
     return output, errors
@@ -32,18 +30,25 @@ def RunCommand(command):
 def Save_Output(command_name, output):
     filename = file(command_name)
     with open(filename, 'w+') as writer:
-        writer.write(output)
+        try:
+            writer.write(output)
+        except TypeError:
+            writer.write('not good') #TODO should implement automatic bytes to string conversion
 
 
 def Check_Command_Status(command):
     if(command.returncode == 0):
         print(f'The command has been executed successfully')
+        return 1
     else:
         print('There was an issue running the command')
+        return -1
 
 
-listed_command = "ifconfig"
+listed_command = ["ifconfig"]
 string_command = "ls -la"
 
 RunCommand(listed_command)
 # print(RunCommand(string_command)[0].decode(utf8))
+if (__name__ == '__main__'):
+    Save_Output('grep', 'grep')
