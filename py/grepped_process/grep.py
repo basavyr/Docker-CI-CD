@@ -17,11 +17,11 @@ def Get_Error():
 
 def RunCommand(command):
     # debug_mode = True
-    executed_command = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE,
+    executed_command = subprocess.Popen(command, shell=True,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
         command_output, command_errors = executed_command.communicate(
-            input=b'nice', timeout=10)
+            timeout=10)
     except subprocess.TimeoutExpired:
         executed_command.kill()
         command_output, command_errors = Get_Error()
@@ -29,8 +29,8 @@ def RunCommand(command):
         command_output, command_errors = Get_Error()
         print(f'There was an issue with running the command.\n{error}')
 
-    # command_name = command[0]
-    # Save_Output(command_name, command_output)
+    command_name = command[0]
+    Save_Output(command_name, command_output)
 
     # if(debug_mode):
     #     print(command_output)
@@ -69,8 +69,11 @@ def Accept_Bytes(input):
 
 
 # listed_command = ["ifconfig", "-h"]
-listed_command = ['ls', '-la']
+listed_command = ['docker', '-v']
 
 if (__name__ == '__main__'):
-    print(RunCommand(listed_command))
+    # print(RunCommand(listed_command))
+    comd = subprocess.Popen(
+        listed_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print(comd.communicate(timeout=10))
     # print(Accept_Bytes(b'sss'))
