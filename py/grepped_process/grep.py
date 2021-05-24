@@ -6,6 +6,7 @@ import time
 
 utf8 = 'UTF-8'
 
+decode = lambda text: text.decode(utf8)
 file = lambda file_name: f'{file_name}_command_output.dat'
 
 
@@ -48,7 +49,6 @@ def Check_Command_Status(command):
 
 listed_command = ["ifconfig", "-h"]
 
-# print(RunCommand(string_command)[0].decode(utf8))
 if (__name__ == '__main__'):
     RunCommand(listed_command)
     Save_Output('grep', 'grep')
