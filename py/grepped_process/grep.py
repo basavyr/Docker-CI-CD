@@ -14,18 +14,18 @@ def RunCommand(command):
     executed_command = subprocess.Popen(command, shell=True,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
-        output, errors = executed_command.communicate(timeout=3)
+        command_output, command_errors = executed_command.communicate(
+            timeout=3)
     except subprocess.TimeoutExpired:
         executed_command.kill()
-        output, errors = executed_command.communicate()
+        command_output, command_errors = executed_command.communicate()
     except OSError as error:
         print(f'There was an issue with running the command.\n{error}')
 
     command_name = command[0]
-    Check_Command_Status(executed_command)
-    Save_Output(command_name, output)
+    Save_Output(command_name, command_output)
 
-    return output, errors
+    return command_output, command_errors
 
 
 def Save_Output(command_name, output):
