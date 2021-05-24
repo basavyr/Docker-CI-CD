@@ -16,7 +16,7 @@ def Get_Error():
 
 
 def RunCommand(command):
-    debug_mode = True
+    # debug_mode = True
     executed_command = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
@@ -26,13 +26,14 @@ def RunCommand(command):
         executed_command.kill()
         command_output, command_errors = Get_Error()
     except OSError as error:
+        command_output, command_errors = Get_Error()
         print(f'There was an issue with running the command.\n{error}')
 
-    command_name = command[0]
-    Save_Output(command_name, command_output)
+    # command_name = command[0]
+    # Save_Output(command_name, command_output)
 
-    if(debug_mode):
-        print(command_output)
+    # if(debug_mode):
+    #     print(command_output)
 
     return command_output, command_errors
 
@@ -68,8 +69,8 @@ def Accept_Bytes(input):
 
 
 # listed_command = ["ifconfig", "-h"]
-listed_command = ['ls']
+listed_command = ['ls', '-la']
 
 if (__name__ == '__main__'):
-    RunCommand(listed_command)
+    print(RunCommand(listed_command))
     # print(Accept_Bytes(b'sss'))
