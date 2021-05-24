@@ -6,6 +6,8 @@ import time
 
 utf8 = 'UTF-8'
 
+file = lambda file_name: f'{file_name}_command_output.dat'
+
 
 def RunCommand(command):
     executed_command = subprocess.Popen(command, shell=True,
@@ -27,6 +29,12 @@ def RunCommand(command):
     return output, errors
 
 
+def Save_Output(command_name, output):
+    filename = file(command_name)
+    with open(filename, 'w+') as writer:
+        writer.write(output)
+
+
 def Check_Command_Status(command):
     if(command.returncode == 0):
         print(f'The command has been executed successfully')
@@ -34,7 +42,7 @@ def Check_Command_Status(command):
         print('There was an issue running the command')
 
 
-listed_command = "dmesg --help"
+listed_command = "ifconfig"
 string_command = "ls -la"
 
 RunCommand(listed_command)
