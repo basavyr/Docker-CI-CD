@@ -21,8 +21,8 @@ def RunCommand(command):
         print(f'There was an issue with running the command.\n{error}')
 
     command_name = command[0]
-    Save_Output(command_name,output)
     Check_Command_Status(executed_command)
+    Save_Output(command_name, output)
 
     return output, errors
 
@@ -33,7 +33,8 @@ def Save_Output(command_name, output):
         try:
             writer.write(output)
         except TypeError:
-            writer.write('not good') #TODO should implement automatic bytes to string conversion
+            # TODO should implement automatic bytes to string conversion
+            writer.write('not good')
 
 
 def Check_Command_Status(command):
@@ -45,10 +46,9 @@ def Check_Command_Status(command):
         return -1
 
 
-listed_command = ["ifconfig"]
-string_command = "ls -la"
+listed_command = ["ifconfig", "-h"]
 
-RunCommand(listed_command)
 # print(RunCommand(string_command)[0].decode(utf8))
 if (__name__ == '__main__'):
+    RunCommand(listed_command)
     Save_Output('grep', 'grep')
