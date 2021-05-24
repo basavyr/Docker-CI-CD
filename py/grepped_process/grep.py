@@ -46,8 +46,15 @@ def Check_Command_Status(command):
         print('There was an issue running the command')
         return -1
 
+def Accept_Bytes(input):
+    try:
+        assert type(input)==bytes, 'The input object is not bytes'
+    except AssertionError:
+        return 1
+    return -1
 
-listed_command = ["ifconfig", "-h"]
+# listed_command = ["ifconfig", "-h"]
+listed_command = ["ls", "-l"]
 
 if (__name__ == '__main__'):
     RunCommand(listed_command)
