@@ -6,24 +6,33 @@ import time
 
 utf8 = 'UTF-8'
 
+encode = lambda obj: bytes(obj, utf8)
 decode = lambda text: text.decode(utf8)
 file = lambda file_name: f'{file_name}_command_output.dat'
 
 
+def Get_Error():
+    return '-1', 'Command could not be executed'
+
+
 def RunCommand(command):
-    executed_command = subprocess.Popen(command, shell=True,
+    debug_mode = True
+    executed_command = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
         command_output, command_errors = executed_command.communicate(
-            timeout=3)
+            input=b'nice', timeout=10)
     except subprocess.TimeoutExpired:
         executed_command.kill()
-        command_output, command_errors = executed_command.communicate()
+        command_output, command_errors = Get_Error()
     except OSError as error:
         print(f'There was an issue with running the command.\n{error}')
 
     command_name = command[0]
     Save_Output(command_name, command_output)
+
+    if(debug_mode):
+        print(command_output)
 
     return command_output, command_errors
 
@@ -59,8 +68,8 @@ def Accept_Bytes(input):
 
 
 # listed_command = ["ifconfig", "-h"]
-listed_command = ["ls", "-l"]
+listed_command = ['ls']
 
 if (__name__ == '__main__'):
-    # RunCommand(listed_command)
-    print(Accept_Bytes(b'sss'))
+    RunCommand(listed_command)
+    # print(Accept_Bytes(b'sss'))
