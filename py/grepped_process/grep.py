@@ -30,6 +30,9 @@ def RunCommand(command):
 
 def Save_Output(command_name, output):
     filename = file(command_name)
+    # decode the output if it is not a string
+    if(Accept_Bytes(output) == -1):
+        output = decode(output)
     with open(filename, 'w+') as writer:
         try:
             writer.write(output)
@@ -46,16 +49,18 @@ def Check_Command_Status(command):
         print('There was an issue running the command')
         return -1
 
+
 def Accept_Bytes(input):
     try:
-        assert type(input)==bytes, 'The input object is not bytes'
+        assert type(input) == bytes, 'The input object is not bytes'
     except AssertionError:
         return 1
     return -1
+
 
 # listed_command = ["ifconfig", "-h"]
 listed_command = ["ls", "-l"]
 
 if (__name__ == '__main__'):
-    RunCommand(listed_command)
-    Save_Output('grep', 'grep')
+    # RunCommand(listed_command)
+    print(Accept_Bytes(b'sss'))
