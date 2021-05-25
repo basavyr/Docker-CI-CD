@@ -7,14 +7,27 @@ import time
 utf8 = 'UTF-8'
 
 
-def encode(obj): return bytes(obj, utf8)
-def decode(text): return text.decode(utf8)
-def create_file(file_name): return f'{file_name}_command_output.dat'
-def search_running_process(process): return f'ps aux | grep {process}'
+class Utils:
+    """Helper class that creates output files, deals with string encoding/decoding and much more"""
 
+    @staticmethod
+    def encode(obj): return bytes(obj, utf8)
 
-def Get_Error():
-    return '-1', 'Command could not be executed'
+    @staticmethod
+    def decode(text): return text.decode(utf8)
+
+    @staticmethod
+    def create_file(file_name): return f'{file_name}_command_output.dat'
+
+    @staticmethod
+    def search_running_process(process): return f'ps aux | grep {process}'
+
+    @staticmethod
+    def Return_Error_Tuple():
+        """
+        Return a safe-mode tuple [output,error] when the command that was executed by Popen could not finish successfully
+        """
+        return '-1', 'Command could not be executed'
 
 
 def RunCommand(command):
@@ -58,7 +71,7 @@ def RunCommand(command):
             else:
                 print(f'Return code: {executed_command.returncode}')
                 if(Accept_Bytes(output)):
-                    print(f'Command output:\n{decode(output)}')
+                    print(f'Command output:\n{output}')
                     Save_Output(command_name, output)
 
     # execute the command outside the interactive shell
@@ -87,15 +100,15 @@ def RunCommand(command):
             else:
                 print(f'Return code: {executed_command_noShell.returncode}')
                 if(Accept_Bytes(output)):
-                    print(f'Command output:\n{decode(output)}')
+                    print(f'Command output:\n{output}')
                     Save_Output(command_name, output)
 
 
 def Save_Output(command_name, output):
-    filename = create_file(command_name)
+    filename = Utils.create_file(command_name)
     # decode the output if it is not a string
     if(Accept_Bytes(output) == -1):
-        output = decode(output)
+        output = Utils.decode(output)
     with open(filename, 'w+') as writer:
         try:
             writer.write(output)
@@ -129,6 +142,7 @@ process_list = {
 }
 
 if (__name__ == '__main__'):
-    get_process_instances = [[search_running_process(process_list["PY"])]]
+    get_process_instances = [
+        [Utils.search_running_process(process_list["MD"])]]
     for command in get_process_instances:
         RunCommand(command)
