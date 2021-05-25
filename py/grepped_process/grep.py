@@ -31,7 +31,7 @@ class Utils:
 
     @staticmethod
     def Make_Shell_Command(command):
-        shell_cmd = '/bin/bash -c ' + str(command)
+        shell_cmd = ['/bin/bash', '-c', str(command)]
         return shell_cmd
 
 
