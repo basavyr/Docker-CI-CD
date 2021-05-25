@@ -74,7 +74,11 @@ def RunCommand(command):
             executed_command = subprocess.Popen(command, shell=True,
                                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
-            print('There was an issue during command execution')
+            if(debug_mode):
+                print('There was an issue during command execution')
+            output, errors = Utils.Return_Error_Tuple()
+            print(
+                f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
         else:
             if(debug_mode):
                 print(f'Command {command} can be executed')
@@ -109,7 +113,11 @@ def RunCommand(command):
             executed_command_noShell = subprocess.Popen(shell_cmd,
                                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
-            print('There was an issue during command execution')
+            if(debug_mode):
+                print('There was an issue during command execution')
+            output, errors = Utils.Return_Error_Tuple()
+            print(
+                f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
         else:
             print(f'Command {command} can be executed')
             try:
@@ -169,6 +177,8 @@ process_list = {
     "SNAP": 'snapd',
     "MD": 'systemd',
     "CLANG": 'clang++'
+
+
 }
 
 if (__name__ == '__main__'):
