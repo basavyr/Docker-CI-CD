@@ -30,6 +30,19 @@ class Utils:
         return '-1', 'Command could not be executed'
 
 
+class Process:
+
+    @staticmethod
+    def Check_Process_Completion(command):
+        try:
+            assert command.returncode == 0, 'Unexpected error ocurred'
+        except AssertionError as err:
+            print(f'There was an issue:\n{err}')
+            return -1
+        else:
+            return 1
+
+
 def RunCommand(command):
     """
     Execute a shell-specific command within a Python method
@@ -58,13 +71,15 @@ def RunCommand(command):
         except FileNotFoundError:
             print('There was an issue during command execution')
         else:
-            print(f'Command {command} can be executed')
+            if(debug_mode):
+                print(f'Command {command} can be executed')
             try:
                 output, errors = executed_command.communicate(timeout=10)
             except subprocess.TimeoutExpired:
                 executed_command.kill()
                 output, errors = Utils.Return_Error_Tuple()
-                print(f'Command output/errors')
+                print(
+                    f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
             except OSError as os_issue:
                 print(f'There was an OS-specific issue.\n{os_issue}')
             except Exception as problem:
@@ -93,6 +108,9 @@ def RunCommand(command):
                     timeout=10)
             except subprocess.TimeoutExpired:
                 executed_command_noShell.kill()
+                output, errors = Utils.Return_Error_Tuple()
+                print(
+                    f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
             except OSError as os_issue:
                 print(f'There was an OS-specific issue.\n{os_issue}')
                 print(errors)
@@ -140,11 +158,12 @@ process_list = {
     "BASH": 'bash',
     "PY": 'python',
     "SNAP": 'snapd',
-    "MD": 'systemd'
+    "MD": 'systemd',
+    "CLANG": 'clang++'
 }
 
 if (__name__ == '__main__'):
     get_process_instances = [
-        [Utils.search_running_process(process_list["MD"])]]
+        [Utils.search_running_process(process_list["CLANG"])]]
     for command in get_process_instances:
         RunCommand(command)
