@@ -96,10 +96,14 @@ def RunCommand(command):
     shell_mode = False
 
     # cannot run ps command in non-shell mode
-    non_shell_mode = True
+    non_shell_mode = False
 
-    # use a static name for the command output file
-    command_name = 'cmd_results'
+    shell_cmd = Utils.Make_Shell_Command(command)
+    # if(debug_mode):
+    print(f'shell command: {shell_cmd}')
+
+    command_name = Utils.extract_name(command)
+    print(f'command name: {command_name}')
 
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
     if(shell_mode):
@@ -142,12 +146,6 @@ def RunCommand(command):
             print('SHELL mode is turned OFF')
         # the command is called within a safe-mode try/except block
         try:
-            cmd = command
-            if(debug_mode):
-                print(f'initial command: {cmd}')
-            shell_cmd = Utils.Make_Shell_Command(cmd)
-            if(debug_mode):
-                print(f'shell command: {shell_cmd}')
             executed_command_noShell = subprocess.Popen(shell_cmd,
                                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
@@ -194,11 +192,12 @@ process_list = {
     "PY": 'python',
     "SNAP": 'snapd',
     "MD": 'systemd',
-    "CLANG": 'clang++'
+    "CLANG": 'clang'
 }
 
 if (__name__ == '__main__'):
 
     for process in process_list:
         unique_process = Utils.search_running_process(process_list[process])
-        print(f'{unique_process} -> {Utils.extract_name(unique_process)}')
+        # print(f'{unique_process} -> {Utils.extract_name(unique_process)}')
+        RunCommand(unique_process)
