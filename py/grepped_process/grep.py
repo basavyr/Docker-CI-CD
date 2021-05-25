@@ -28,18 +28,38 @@ def RunCommand(command):
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
     if(debug_mode):
         print('running the shell based command')
-    executed_command = subprocess.Popen(command, shell=True,
-                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # execute the shell command in safe-mode using the try/except block
+    try:
+        executed_command = subprocess.Popen(command, shell=True,
+                                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except FileNotFoundError:
+        print('There was an issue during command execution')
+    else:
+        print('Command can be executed')
+        try:
+            executed_command.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            print('The command runtime has reached the timeout')
+
     # execute the command outside the interactive shell
     if(debug_mode):
         print('running the non shell based command')
+    # the command is called within a safe-mode try/except block
     try:
         executed_command_noShell = subprocess.Popen(command,
                                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except FileNotFoundError:
-        print('the command cannot be executed')
+        print('There was an issue during command execution')
     else:
-        print('the command can be executed and communication protocol can be called')
+        print('The command can be executed and communication protocol can be called')
+        try:
+            executed_command_noShell.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            print('the command runtime has reached the timeout limit')
+        else:
+            pass
+        # print(return_code)
+
     # try:
     #     if(debug_mode):
     #         print('in try')
@@ -98,7 +118,7 @@ def Accept_Bytes(input):
 
 
 if (__name__ == '__main__'):
-    command_list = [['docker', '-v'], ['ifconfig'],
+    command_list = [['docker', '-v'], ['uname', '-a'],
                     ['ls', '-la'], ['df', '-h'], ['tree', '-h']]
     for command in command_list:
         RunCommand(command)
