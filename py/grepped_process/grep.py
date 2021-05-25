@@ -6,9 +6,10 @@ import time
 
 utf8 = 'UTF-8'
 
-encode = lambda obj: bytes(obj, utf8)
-decode = lambda text: text.decode(utf8)
-file = lambda file_name: f'{file_name}_command_output.dat'
+
+def encode(obj): return bytes(obj, utf8)
+def decode(text): return text.decode(utf8)
+def file(file_name): return f'{file_name}_command_output.dat'
 
 
 def Get_Error():
@@ -16,10 +17,18 @@ def Get_Error():
 
 
 def RunCommand(command):
+    """
+    Execute a shell-specific command within a Python method
+
+    Uses the Popen function, from the subprocess module
+
+    """
     debug_mode = True
 
+    # execute the command with shell mode turned on: that means the command is executed within the interactive shell
     executed_command = subprocess.Popen(command, shell=True,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # execute the command outside the interactive shell
     executed_command_noShell = subprocess.Popen(command,
                                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
