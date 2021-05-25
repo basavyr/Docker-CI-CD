@@ -25,40 +25,55 @@ def RunCommand(command):
     """
     debug_mode = True
 
+    shell_mode = True
+    non_shell_mode = False
+
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
-    if(debug_mode):
-        print('running the shell based command')
-    # execute the shell command in safe-mode using the try/except block
-    try:
-        executed_command = subprocess.Popen(command, shell=True,
-                                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    except FileNotFoundError:
-        print('There was an issue during command execution')
-    else:
-        print('Command can be executed')
+    if(shell_mode):
+        if(debug_mode):
+            print('SHELL mode is turned ON')
+        # execute the shell command in safe-mode using the try/except block
         try:
-            executed_command.communicate(timeout=10)
-        except subprocess.TimeoutExpired:
-            print('The command runtime has reached the timeout')
+            executed_command = subprocess.Popen(command, shell=True,
+                                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except FileNotFoundError:
+            print('There was an issue during command execution')
+        else:
+            print(f'Command {command} can be executed')
+            try:
+                output, errors = executed_command.communicate(timeout=10)
+            except subprocess.TimeoutExpired:
+                print(
+                    'The command can be executed and communication protocol can be called')
+            except Exception as problem:
+                print(
+                    f'There was an issue while trying to execute the command:\n{problem}')
+            else:
+                print(f'Return code: {executed_command.returncode}')
 
     # execute the command outside the interactive shell
-    if(debug_mode):
-        print('running the non shell based command')
-    # the command is called within a safe-mode try/except block
-    try:
-        executed_command_noShell = subprocess.Popen(command,
-                                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    except FileNotFoundError:
-        print('There was an issue during command execution')
-    else:
-        print('The command can be executed and communication protocol can be called')
+    if(non_shell_mode):
+        if(debug_mode):
+            print('SHELL mode is turned OFF')
+        # the command is called within a safe-mode try/except block
         try:
-            executed_command_noShell.communicate(timeout=10)
-        except subprocess.TimeoutExpired:
-            print('the command runtime has reached the timeout limit')
+            executed_command_noShell = subprocess.Popen(command,
+                                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except FileNotFoundError:
+            print('There was an issue during command execution')
         else:
-            pass
-        # print(return_code)
+            print(f'Command {command} can be executed')
+            try:
+                output, errors = executed_command_noShell.communicate(
+                    timeout=10)
+            except subprocess.TimeoutExpired:
+                print(
+                    'The command can be executed and communication protocol can be called')
+            except Exception as problem:
+                print(
+                    f'There was an issue while trying to execute the command:\n{problem}')
+            else:
+                print(f'Return code: {executed_command_noShell.returncode}')
 
     # try:
     #     if(debug_mode):
