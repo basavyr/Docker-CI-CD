@@ -1,2 +1,2 @@
-robertp+   35288  0.0  0.0   7268  2796 pts/2    S+   21:46   0:00 /bin/bash -c ps aux | grep ifconfig
-robertp+   35290  0.0  0.0   6416  2236 pts/2    R+   21:46   0:00 grep ifconfig
+robertp+   36027  0.0  0.0   7268  2960 pts/2    S+   21:52   0:00 /bin/bash -c ps aux | grep ifconfig
+robertp+   36029  0.0  0.0   6416  2216 pts/2    S+   21:52   0:00 grep ifconfig
