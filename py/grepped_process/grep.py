@@ -26,28 +26,45 @@ def RunCommand(command):
     debug_mode = True
 
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
+    if(debug_mode):
+        print('running the shell based command')
     executed_command = subprocess.Popen(command, shell=True,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # execute the command outside the interactive shell
-    executed_command_noShell = subprocess.Popen(command,
-                                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    try:
-        command_output, command_errors = executed_command_noShell.communicate(
-            timeout=10)
-    except subprocess.TimeoutExpired:
-        executed_command_noShell.kill()
-        command_output, command_errors = Get_Error()
-    except OSError as error:
-        command_output, command_errors = Get_Error()
-        print(f'There was an issue with running the command.\n{error}')
-
-    command_name = command[0]
-    Save_Output(command_name, command_output)
-
     if(debug_mode):
-        print(command_output)
+        print('running the non shell based command')
+    try:
+        executed_command_noShell = subprocess.Popen(command,
+                                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    except FileNotFoundError:
+        print('the command cannot be executed')
+    else:
+        print('the command can be executed and communication protocol can be called')
+    # try:
+    #     if(debug_mode):
+    #         print('in try')
+    #     command_output, command_errors = executed_command_noShell.communicate(
+    #         timeout=10)
+    # except FileNotFoundError as error:
+    #     print('no good')
+    # except subprocess.TimeoutExpired:
+    #     if(debug_mode):
+    #         print('in timeout except')
+    #     executed_command_noShell.kill()
+    #     command_output, command_errors = Get_Error()
+    # except OSError as error:
+    #     if(debug_mode):
+    #         print('in oserror except')
+    #     command_output, command_errors = Get_Error()
+    #     print(f'There was an issue with running the command.\n{error}')
 
-    return command_output, command_errors
+    # command_name = command[0]
+    # Save_Output(command_name, command_output)
+
+    # if(debug_mode):
+    #     print(command_output)
+
+    # return command_output, command_errors
 
 
 def Save_Output(command_name, output):
@@ -81,6 +98,7 @@ def Accept_Bytes(input):
 
 
 if (__name__ == '__main__'):
-    command_list = [['docker', '-v'], ['ifconfig'], ['ls', '-la']]
+    command_list = [['docker', '-v'], ['ifconfig'],
+                    ['ls', '-la'], ['df', '-h'], ['tree', '-h']]
     for command in command_list:
         RunCommand(command)
