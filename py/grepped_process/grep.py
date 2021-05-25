@@ -49,6 +49,15 @@ class Process:
             return 1
 
     @staticmethod
+    def Get_Command_Status(command):
+        try:
+            assert command.returncode == 0, 'Unexpected error ocurred'
+        except AssertionError:
+            return 'NOT OK'
+        else:
+            return 'OK'
+
+    @staticmethod
     def Check_Active_Instances(command_output_file):
         with open(command_output_file, 'r+') as reader:
             active_instances = reader.readlines()
@@ -145,7 +154,8 @@ def RunCommand(command):
                 print(
                     f'There was an issue while trying to execute the command:\n{problem}')
             else:
-                print(f'Return code: {executed_command_noShell.returncode}')
+                print(
+                    f'Return code: {executed_command_noShell.returncode} ({Process.Get_Command_Status(executed_command_noShell)})')
                 if(Accept_Bytes(output)):
                     print(f'Command output -> Saved into its output file...')
                     Save_Output(command_name, output)
@@ -185,5 +195,6 @@ process_list = {
 if (__name__ == '__main__'):
     get_process_instances = [
         [Utils.search_running_process(process_list["CLANG"])]]
-    for command in get_process_instances:
-        RunCommand(command)
+
+    # for command in get_process_instances:
+    #     RunCommand(command)
