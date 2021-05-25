@@ -96,14 +96,15 @@ def RunCommand(command):
     shell_mode = False
 
     # cannot run ps command in non-shell mode
-    non_shell_mode = False
+    non_shell_mode = True
 
     shell_cmd = Utils.Make_Shell_Command(command)
-    # if(debug_mode):
-    print(f'shell command: {shell_cmd}')
+    if(debug_mode):
+        print(f'shell command: {shell_cmd}')
 
     command_name = Utils.extract_name(command)
-    print(f'command name: {command_name}')
+    if(debug_mode):
+        print(f'command name: {command_name}')
 
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
     if(shell_mode):
@@ -121,7 +122,7 @@ def RunCommand(command):
                 f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
         else:
             if(debug_mode):
-                print(f'Command {command} can be executed')
+                print(f'Command <<{command}>> can be executed')
             try:
                 output, errors = executed_command.communicate(timeout=10)
             except subprocess.TimeoutExpired:
@@ -159,7 +160,7 @@ def RunCommand(command):
             try:
                 output, errors = executed_command_noShell.communicate(
                     timeout=10)
-                print(f'Command {command} was executed')
+                print(f'Command <<{command}>> was executed')
             except subprocess.TimeoutExpired:
                 executed_command_noShell.kill()
                 output, errors = Utils.Return_Error_Tuple()
@@ -199,5 +200,4 @@ if (__name__ == '__main__'):
 
     for process in process_list:
         unique_process = Utils.search_running_process(process_list[process])
-        # print(f'{unique_process} -> {Utils.extract_name(unique_process)}')
         RunCommand(unique_process)
