@@ -27,7 +27,9 @@ def RunCommand(command):
     debug_mode = True
 
     shell_mode = True
-    non_shell_mode = False
+
+    # cannot run ps command in non-shell mode
+    non_shell_mode = True
 
     # use a static name for the command output file
     command_name = 'cmd_results'
@@ -50,7 +52,6 @@ def RunCommand(command):
                 executed_command.kill()
             except OSError as os_issue:
                 print(f'There was an OS-specific issue.\n{os_issue}')
-                print(errors)
             except Exception as problem:
                 print(
                     f'There was an issue while trying to execute the command:\n{problem}')
@@ -66,7 +67,7 @@ def RunCommand(command):
             print('SHELL mode is turned OFF')
         # the command is called within a safe-mode try/except block
         try:
-            executed_command_noShell = subprocess.Popen(command,
+            executed_command_noShell = subprocess.Popen(['/bin/bash', '-c', command[0]],
                                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
             print('There was an issue during command execution')
@@ -88,32 +89,6 @@ def RunCommand(command):
                 if(Accept_Bytes(output)):
                     print(f'Command output:\n{decode(output)}')
                     Save_Output(command_name, output)
-
-    # try:
-    #     if(debug_mode):
-    #         print('in try')
-    #     command_output, command_errors = executed_command_noShell.communicate(
-    #         timeout=10)
-    # except FileNotFoundError as error:
-    #     print('no good')
-    # except subprocess.TimeoutExpired:
-    #     if(debug_mode):
-    #         print('in timeout except')
-    #     executed_command_noShell.kill()
-    #     command_output, command_errors = Get_Error()
-    # except OSError as error:
-    #     if(debug_mode):
-    #         print('in oserror except')
-    #     command_output, command_errors = Get_Error()
-    #     print(f'There was an issue with running the command.\n{error}')
-
-    # command_name = command[0]
-    # Save_Output(command_name, command_output)
-
-    # if(debug_mode):
-    #     print(command_output)
-
-    # return command_output, command_errors
 
 
 def Save_Output(command_name, output):
@@ -154,6 +129,6 @@ process_list = {
 }
 
 if (__name__ == '__main__'):
-    grep_commands = [[search_running_process(process_list["PY"])]]
-    for command in grep_commands:
+    get_process_instances = [[search_running_process(process_list["PY"])]]
+    for command in get_process_instances:
         RunCommand(command)
