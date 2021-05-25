@@ -1,0 +1,8 @@
+robertp+ 1105718  0.0  0.0  18036    96 ?        S    13:09   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@gmail.com
+robertp+ 1105723  0.0  0.0  18036   100 ?        S    13:09   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@drd.unibuc.ro
+robertp+ 1105728  0.0  0.0  18036    56 ?        S    13:09   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@outlook.com
+robertp+ 1105733  0.0  0.0  18036   164 ?        S    13:09   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@icloud.com
+robertp+ 1105738  0.0  0.0  18036   100 ?        S    13:09   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@nipne.ro
+robertp+ 1109819  0.0  0.0   7480   672 ?        S    13:30   0:00 /bin/bash /app/bin/discord
+robertp+ 1122548  0.0  0.0   7268  2824 pts/2    S+   14:19   0:00 /bin/sh -c ps aux | grep bash
+robertp+ 1122550  0.0  0.0   6412  2144 pts/2    S+   14:19   0:00 grep bash

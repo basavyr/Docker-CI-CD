@@ -9,7 +9,8 @@ utf8 = 'UTF-8'
 
 def encode(obj): return bytes(obj, utf8)
 def decode(text): return text.decode(utf8)
-def file(file_name): return f'{file_name}_command_output.dat'
+def create_file(file_name): return f'{file_name}_command_output.dat'
+def create_grep_command(process): return f'ps aux | grep {process}'
 
 
 def Get_Error():
@@ -28,6 +29,8 @@ def RunCommand(command):
     shell_mode = True
     non_shell_mode = False
 
+    command_name = 'cmd_results'
+
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
     if(shell_mode):
         if(debug_mode):
@@ -43,13 +46,18 @@ def RunCommand(command):
             try:
                 output, errors = executed_command.communicate(timeout=10)
             except subprocess.TimeoutExpired:
-                print(
-                    'The command can be executed and communication protocol can be called')
+                executed_command.kill()
+            except OSError as os_issue:
+                print(f'There was an OS-specific issue.\n{os_issue}')
+                print(errors)
             except Exception as problem:
                 print(
                     f'There was an issue while trying to execute the command:\n{problem}')
             else:
                 print(f'Return code: {executed_command.returncode}')
+                if(Accept_Bytes(output)):
+                    print(f'Command output:\n{decode(output)}')
+                    Save_Output(command_name, output)
 
     # execute the command outside the interactive shell
     if(non_shell_mode):
@@ -67,13 +75,18 @@ def RunCommand(command):
                 output, errors = executed_command_noShell.communicate(
                     timeout=10)
             except subprocess.TimeoutExpired:
-                print(
-                    'The command can be executed and communication protocol can be called')
+                executed_command_noShell.kill()
+            except OSError as os_issue:
+                print(f'There was an OS-specific issue.\n{os_issue}')
+                print(errors)
             except Exception as problem:
                 print(
                     f'There was an issue while trying to execute the command:\n{problem}')
             else:
                 print(f'Return code: {executed_command_noShell.returncode}')
+                if(Accept_Bytes(output)):
+                    print(f'Command output:\n{decode(output)}')
+                    Save_Output(command_name, output)
 
     # try:
     #     if(debug_mode):
@@ -103,7 +116,7 @@ def RunCommand(command):
 
 
 def Save_Output(command_name, output):
-    filename = file(command_name)
+    filename = create_file(command_name)
     # decode the output if it is not a string
     if(Accept_Bytes(output) == -1):
         output = decode(output)
@@ -133,7 +146,6 @@ def Accept_Bytes(input):
 
 
 if (__name__ == '__main__'):
-    command_list = [['docker', '-v'], ['uname', '-a'],
-                    ['ls', '-la'], ['df', '-h'], ['tree', '-h']]
-    for command in command_list:
+    grep_commands = [[create_grep_command('bash')]]
+    for command in grep_commands:
         RunCommand(command)
