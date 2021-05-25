@@ -193,11 +193,8 @@ process_list = {
 }
 
 if (__name__ == '__main__'):
-    unique_process = Utils.search_running_process(process_list["PY"])
 
 
-    print(unique_process)
-    # for proc in process_list:
-    #     print(process_list[proc])
-
-    RunCommand(unique_process)
+    for process in process_list:
+        unique_process = Utils.search_running_process(process_list[process])
+        print(unique_process)
