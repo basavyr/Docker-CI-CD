@@ -1,2 +1,2 @@
-robertp+   33279  0.0  0.0   7268  3520 pts/2    S+   21:34   0:00 /bin/bash -c ps aux | grep clang
-robertp+   33281  0.0  0.0   6412  2236 pts/2    S+   21:34   0:00 grep clang
+robertp+   34112  0.0  0.0   7268  2968 pts/2    S+   21:36   0:00 /bin/bash -c ps aux | grep clang
+robertp+   34114  0.0  0.0   6412  2272 pts/2    S+   21:36   0:00 grep clang

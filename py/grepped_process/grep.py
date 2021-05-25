@@ -161,8 +161,9 @@ def RunCommand(command):
             if(debug_mode):
                 print('There was an issue during command execution')
             output, errors = Utils.Return_Error_Tuple()
-            print(
-                f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
+            if(debug_mode):
+                print(
+                    f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
         else:
             # If no errors occur during the command execution
             try:
@@ -172,19 +173,24 @@ def RunCommand(command):
             except subprocess.TimeoutExpired:
                 executed_command_noShell.kill()
                 output, errors = Utils.Return_Error_Tuple()
-                print(
-                    f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
+                if(debug_mode):
+                    print(
+                        f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
             except OSError as os_issue:
-                print(f'There was an OS-specific issue.\n{os_issue}')
-                print(errors)
+                if(debug_mode):
+                    print(f'There was an OS-specific issue.\n{os_issue}')
+                    print(errors)
             except Exception as problem:
-                print(
-                    f'There was an issue while trying to execute the command:\n{problem}')
+                if(debug_mode):
+                    print(
+                        f'There was an issue while trying to execute the command:\n{problem}')
             else:
-                print(
-                    f'Return code: {executed_command_noShell.returncode} ({Process.Get_Command_Status(executed_command_noShell)})')
+                if(debug_mode):
+                    print(
+                        f'Return code: {executed_command_noShell.returncode} ({Process.Get_Command_Status(executed_command_noShell)})')
                 if(Accept_Bytes(output)):
-                    print(f'Command output -> Saved into its output file...')
+                    if(debug_mode):
+                        print(f'Command output -> Saved into its output file...')
                     Utils.Save_Output(command_name, output)
 
 
