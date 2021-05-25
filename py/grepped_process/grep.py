@@ -83,6 +83,14 @@ class Process:
             active_instances = reader.readlines()
         return active_instances
 
+    @staticmethod
+    def Get_Active_Instances(process):
+        process_file = Utils.create_file(Utils.extract_name(process))
+        with open(process_file, 'r+') as reader:
+            instances = reader.readlines()
+        n_instances = len(instances)
+        return n_instances
+
 
 def RunCommand(command):
     """
@@ -201,3 +209,4 @@ if (__name__ == '__main__'):
     for process in process_list:
         unique_process = Utils.search_running_process(process_list[process])
         RunCommand(unique_process)
+        print(Process.Get_Active_Instances(unique_process))
