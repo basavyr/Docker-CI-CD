@@ -10,7 +10,7 @@ utf8 = 'UTF-8'
 def encode(obj): return bytes(obj, utf8)
 def decode(text): return text.decode(utf8)
 def create_file(file_name): return f'{file_name}_command_output.dat'
-def create_grep_command(process): return f'ps aux | grep {process}'
+def search_running_process(process): return f'ps aux | grep {process}'
 
 
 def Get_Error():
@@ -29,6 +29,7 @@ def RunCommand(command):
     shell_mode = True
     non_shell_mode = False
 
+    # use a static name for the command output file
     command_name = 'cmd_results'
 
     # execute the command with shell mode turned on: that means the command is executed within the interactive shell
@@ -145,7 +146,14 @@ def Accept_Bytes(input):
     return -1
 
 
+process_list = {
+    "BASH": 'bash',
+    "PY": 'python',
+    "SNAP": 'snapd',
+    "MD": 'systemd'
+}
+
 if (__name__ == '__main__'):
-    grep_commands = [[create_grep_command('bash')]]
+    grep_commands = [[search_running_process(process_list["PY"])]]
     for command in grep_commands:
         RunCommand(command)
