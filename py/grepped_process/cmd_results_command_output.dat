@@ -1,2 +1,5 @@
-robertp+ 1147924  0.0  0.0   7268  2780 pts/2    S+   16:42   0:00 /bin/bash -c ps aux | grep clang++
-robertp+ 1147926  0.0  0.0   6412  2248 pts/2    S+   16:42   0:00 grep clang++
+robertpoenaru     7092   9.7  0.0  4637312   7004 s000  S+    6:11PM   0:00.05 /Users/robertpoenaru/.pyenv/versions/systems/bin/python ./grep.py
+robertpoenaru     2905   1.2  0.8  6662684 265400   ??  S     5:35PM   2:11.85 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.842923320/pythonFiles/pyvsc-run-isolated.py /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.842923320/pythonFiles/completion.py
+robertpoenaru     7139   0.0  0.0  4399480    828 s000  S+    6:11PM   0:00.00 grep python
+robertpoenaru     7137   0.0  0.0  4400056   1128 s000  S+    6:11PM   0:00.00 /bin/bash -c ps aux | grep python
+robertpoenaru     5875   0.0  0.1  5848908  37232   ??  S     6:06PM   0:01.53 /Users/robertpoenaru/.pyenv/versions/3.8.6/envs/systems/bin/python /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.842923320/pythonFiles/lib/python/jedi/inference/compiled/subprocess/__main__.py /Users/robertpoenaru/.vscode/extensions/ms-python.python-2021.5.842923320/pythonFiles/lib/python 3.8.6

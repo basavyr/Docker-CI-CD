@@ -46,8 +46,8 @@ class Utils:
             try:
                 writer.write(command_output)
             except TypeError:
-                # TODO should implement automatic bytes to string conversion
-                writer.write('not good')
+                command_output = Utils.decode(command_output)
+                writer.write(command_output)
 
 
 class Process:
@@ -129,7 +129,7 @@ def RunCommand(command):
                 print(f'Return code: {executed_command.returncode}')
                 if(Accept_Bytes(output)):
                     print(f'Command output:\n{output}')
-                    Save_Output(command_name, output)
+                    Utils.Save_Output(command_name, output)
 
     # execute the command outside the interactive shell
     if(non_shell_mode):
@@ -137,7 +137,7 @@ def RunCommand(command):
             print('SHELL mode is turned OFF')
         # the command is called within a safe-mode try/except block
         try:
-            cmd = command[0]
+            cmd = command
             if(debug_mode):
                 print(f'initial command: {cmd}')
             shell_cmd = Utils.Make_Shell_Command(cmd)
@@ -173,7 +173,7 @@ def RunCommand(command):
                     f'Return code: {executed_command_noShell.returncode} ({Process.Get_Command_Status(executed_command_noShell)})')
                 if(Accept_Bytes(output)):
                     print(f'Command output -> Saved into its output file...')
-                    Save_Output(command_name, output)
+                    Utils.Save_Output(command_name, output)
 
 
 def Accept_Bytes(input):
@@ -190,13 +190,14 @@ process_list = {
     "SNAP": 'snapd',
     "MD": 'systemd',
     "CLANG": 'clang++'
-
-
 }
 
 if (__name__ == '__main__'):
-    get_process_instances = [
-        [Utils.search_running_process(process_list["CLANG"])]]
+    unique_process = Utils.search_running_process(process_list["PY"])
 
-    # for command in get_process_instances:
-    #     RunCommand(command)
+
+    print(unique_process)
+    # for proc in process_list:
+    #     print(process_list[proc])
+
+    RunCommand(unique_process)
