@@ -29,6 +29,11 @@ class Utils:
         """
         return '-1', 'Command could not be executed'
 
+    @staticmethod
+    def Make_Shell_Command(command):
+        shell_cmd = '/bin/bash -c ' + str(command)
+        return shell_cmd
+
 
 class Process:
 
@@ -97,7 +102,11 @@ def RunCommand(command):
             print('SHELL mode is turned OFF')
         # the command is called within a safe-mode try/except block
         try:
-            executed_command_noShell = subprocess.Popen(['/bin/bash', '-c', command[0]],
+            cmd = command[0]
+            print(f'initial command: {cmd}')
+            shell_cmd = Utils.Make_Shell_Command(cmd)
+            print(f'shell command: {shell_cmd}')
+            executed_command_noShell = subprocess.Popen(shell_cmd,
                                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
             print('There was an issue during command execution')
