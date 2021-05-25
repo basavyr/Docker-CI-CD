@@ -4,5 +4,5 @@ robertp+    7993  0.0  0.0  18036  2864 ?        S    17:21   0:00 /bin/bash /sn
 robertp+    7998  0.0  0.0  18036  2812 ?        S    17:21   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@icloud.com
 robertp+    8003  0.0  0.0  18036  2740 ?        S    17:21   0:00 /bin/bash /snap/mailspring/505/usr/share/mailspring/resources/app.asar.unpacked/mailsync --mode sync --info robert.poenaru@nipne.ro
 robertp+    9603  0.0  0.0   7480  3632 ?        S    17:22   0:00 /bin/bash /app/bin/discord
-robertp+   34100  0.0  0.0   7268  2892 pts/2    S+   21:36   0:00 /bin/bash -c ps aux | grep bash
-robertp+   34102  0.0  0.0   6412  2372 pts/2    S+   21:36   0:00 grep bash
+robertp+   35267  0.0  0.0   7268  2792 pts/2    S+   21:46   0:00 /bin/bash -c ps aux | grep bash
+robertp+   35269  0.0  0.0   6412  2264 pts/2    S+   21:46   0:00 grep bash

@@ -89,7 +89,12 @@ class Process:
         with open(process_file, 'r+') as reader:
             instances = reader.readlines()
         n_instances = len(instances)
-        return n_instances
+        # the real number of active instances is N-2
+        # one instance is from the grep itself, the other is for the python script
+        real_instances = n_instances-2
+        if(real_instances == 0):
+            return -1
+        return real_instances
 
 
 def RunCommand(command):
@@ -207,7 +212,8 @@ process_list = {
     "PY": 'python',
     "SNAP": 'snapd',
     "MD": 'systemd',
-    "CLANG": 'clang'
+    "CLANG": 'clang',
+    "IFCONF": 'ifconfig'
 }
 
 if (__name__ == '__main__'):
@@ -215,4 +221,12 @@ if (__name__ == '__main__'):
     for process in process_list:
         unique_process = Utils.search_running_process(process_list[process])
         RunCommand(unique_process)
-        print(Process.Get_Active_Instances(unique_process))
+        try:
+            w = Process.Get_Active_Instances(
+                unique_process)
+            assert w != -1, 'No active instances for this process'
+        except AssertionError:
+            print(
+                f'{Utils.extract_name(unique_process)} not found in the process tree')
+        else:
+            print(w)

@@ -1,9 +1,9 @@
-root         278  0.0  0.1  22880 11744 ?        Ss   17:18   0:00 /usr/lib/systemd/systemd-journald
-root         279  0.0  0.1  30988  9744 ?        Ss   17:18   0:01 /usr/lib/systemd/systemd-udevd
+root         278  0.0  0.1  22880 13328 ?        Ss   17:18   0:00 /usr/lib/systemd/systemd-journald
+root         279  0.0  0.1  30988  9552 ?        Ss   17:18   0:01 /usr/lib/systemd/systemd-udevd
 systemd+     708  0.0  0.0  89916  6640 ?        Ssl  17:18   0:00 /usr/lib/systemd/systemd-timesyncd
-dbus         716  0.0  0.0  14924  7716 ?        Ss   17:18   0:07 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+dbus         716  0.0  0.0  14924  7724 ?        Ss   17:18   0:09 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
 root         722  0.0  0.1 244220  8188 ?        Ss   17:18   0:00 /usr/lib/systemd/systemd-logind
-robertp+    1573  0.0  0.1  16976 10220 ?        Ss   17:19   0:00 /usr/lib/systemd/systemd --user
-robertp+    1594  0.0  0.0  14256  7608 ?        Ss   17:19   0:01 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
-robertp+   34109  0.0  0.0   7268  3540 pts/2    S+   21:36   0:00 /bin/bash -c ps aux | grep systemd
-robertp+   34111  0.0  0.0   6412  2236 pts/2    S+   21:36   0:00 grep systemd
+robertp+    1573  0.0  0.1  16976 10200 ?        Ss   17:19   0:00 /usr/lib/systemd/systemd --user
+robertp+    1594  0.0  0.0  14256  7608 ?        Ss   17:19   0:02 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+robertp+   35279  0.0  0.0   7268  2828 pts/2    S+   21:46   0:00 /bin/bash -c ps aux | grep systemd
+robertp+   35281  0.0  0.0   6412  2236 pts/2    S+   21:46   0:00 grep systemd
