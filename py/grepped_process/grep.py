@@ -45,7 +45,14 @@ class Process:
             print(f'There was an issue:\n{err}')
             return -1
         else:
+            print(f'The command {command} has finished properly')
             return 1
+
+    @staticmethod
+    def Check_Active_Instances(command_output_file):
+        with open(command_output_file, 'r+') as reader:
+            active_instances = reader.readlines()
+        return active_instances
 
 
 def RunCommand(command):
@@ -55,7 +62,7 @@ def RunCommand(command):
     Uses the Popen function, from the subprocess module
 
     """
-    debug_mode = True
+    debug_mode = False
 
     shell_mode = False
 
@@ -107,9 +114,11 @@ def RunCommand(command):
         # the command is called within a safe-mode try/except block
         try:
             cmd = command[0]
-            print(f'initial command: {cmd}')
+            if(debug_mode):
+                print(f'initial command: {cmd}')
             shell_cmd = Utils.Make_Shell_Command(cmd)
-            print(f'shell command: {shell_cmd}')
+            if(debug_mode):
+                print(f'shell command: {shell_cmd}')
             executed_command_noShell = subprocess.Popen(shell_cmd,
                                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except FileNotFoundError:
@@ -119,10 +128,11 @@ def RunCommand(command):
             print(
                 f'Command output/errors:\nSTDOUT: {output}\nSTDERR: {errors}')
         else:
-            print(f'Command {command} can be executed')
+            # If no errors occur during the command execution
             try:
                 output, errors = executed_command_noShell.communicate(
                     timeout=10)
+                print(f'Command {command} was executed')
             except subprocess.TimeoutExpired:
                 executed_command_noShell.kill()
                 output, errors = Utils.Return_Error_Tuple()
@@ -137,7 +147,7 @@ def RunCommand(command):
             else:
                 print(f'Return code: {executed_command_noShell.returncode}')
                 if(Accept_Bytes(output)):
-                    print(f'Command output:\n{output}')
+                    print(f'Command output -> Saved into its output file...')
                     Save_Output(command_name, output)
 
 
@@ -152,15 +162,6 @@ def Save_Output(command_name, output):
         except TypeError:
             # TODO should implement automatic bytes to string conversion
             writer.write('not good')
-
-
-def Check_Command_Status(command):
-    if(command.returncode == 0):
-        print(f'The command has been executed successfully')
-        return 1
-    else:
-        print('There was an issue running the command')
-        return -1
 
 
 def Accept_Bytes(input):
