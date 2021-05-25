@@ -16,14 +16,17 @@ def Get_Error():
 
 
 def RunCommand(command):
-    # debug_mode = True
+    debug_mode = True
+
     executed_command = subprocess.Popen(command, shell=True,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    executed_command_noShell = subprocess.Popen(command,
+                                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
-        command_output, command_errors = executed_command.communicate(
+        command_output, command_errors = executed_command_noShell.communicate(
             timeout=10)
     except subprocess.TimeoutExpired:
-        executed_command.kill()
+        executed_command_noShell.kill()
         command_output, command_errors = Get_Error()
     except OSError as error:
         command_output, command_errors = Get_Error()
@@ -32,8 +35,8 @@ def RunCommand(command):
     command_name = command[0]
     Save_Output(command_name, command_output)
 
-    # if(debug_mode):
-    #     print(command_output)
+    if(debug_mode):
+        print(command_output)
 
     return command_output, command_errors
 
@@ -68,12 +71,7 @@ def Accept_Bytes(input):
     return -1
 
 
-# listed_command = ["ifconfig", "-h"]
-listed_command = ['docker', '-v']
-
 if (__name__ == '__main__'):
-    # print(RunCommand(listed_command))
-    comd = subprocess.Popen(
-        listed_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    print(comd.communicate(timeout=10))
-    # print(Accept_Bytes(b'sss'))
+    command_list = [['docker', '-v'], ['ifconfig'], ['ls', '-la']]
+    for command in command_list:
+        RunCommand(command)
