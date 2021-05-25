@@ -34,6 +34,21 @@ class Utils:
         shell_cmd = ['/bin/bash', '-c', str(command)]
         return shell_cmd
 
+    @staticmethod
+    def Save_Output(command_name, command_output):
+        filename = Utils.create_file(command_name)
+
+        # if the output object is in bytes, convert it to string
+        if(Accept_Bytes(command_output) == -1):
+            command_output = Utils.decode(command_output)
+
+        with open(filename, 'w+') as writer:
+            try:
+                writer.write(command_output)
+            except TypeError:
+                # TODO should implement automatic bytes to string conversion
+                writer.write('not good')
+
 
 class Process:
 
@@ -159,19 +174,6 @@ def RunCommand(command):
                 if(Accept_Bytes(output)):
                     print(f'Command output -> Saved into its output file...')
                     Save_Output(command_name, output)
-
-
-def Save_Output(command_name, output):
-    filename = Utils.create_file(command_name)
-    # decode the output if it is not a string
-    if(Accept_Bytes(output) == -1):
-        output = Utils.decode(output)
-    with open(filename, 'w+') as writer:
-        try:
-            writer.write(output)
-        except TypeError:
-            # TODO should implement automatic bytes to string conversion
-            writer.write('not good')
 
 
 def Accept_Bytes(input):
