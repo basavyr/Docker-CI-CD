@@ -49,6 +49,11 @@ class Utils:
                 command_output = Utils.decode(command_output)
                 writer.write(command_output)
 
+    @staticmethod
+    def extract_name(full_command):
+        stripped = full_command.split(' ')
+        return stripped[-1]
+
 
 class Process:
 
@@ -194,7 +199,6 @@ process_list = {
 
 if (__name__ == '__main__'):
 
-
     for process in process_list:
         unique_process = Utils.search_running_process(process_list[process])
-        print(unique_process)
+        print(f'{unique_process} -> {Utils.extract_name(unique_process)}')
