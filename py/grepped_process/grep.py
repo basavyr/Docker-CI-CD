@@ -39,7 +39,7 @@ def RunCommand(command):
     """
     debug_mode = True
 
-    shell_mode = True
+    shell_mode = False
 
     # cannot run ps command in non-shell mode
     non_shell_mode = True
@@ -63,6 +63,8 @@ def RunCommand(command):
                 output, errors = executed_command.communicate(timeout=10)
             except subprocess.TimeoutExpired:
                 executed_command.kill()
+                output, errors = Utils.Return_Error_Tuple()
+                print(f'Command output/errors')
             except OSError as os_issue:
                 print(f'There was an OS-specific issue.\n{os_issue}')
             except Exception as problem:

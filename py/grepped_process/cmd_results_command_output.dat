@@ -1,9 +1,9 @@
-root         268  0.0  0.1  40180  8184 ?        Ss   May21   0:18 /usr/lib/systemd/systemd-journald
-root         269  0.0  0.0  30984  2044 ?        Ss   May21   0:34 /usr/lib/systemd/systemd-udevd
-systemd+     664  0.0  0.0  89916  1088 ?        Ssl  May21   0:00 /usr/lib/systemd/systemd-timesyncd
-dbus         728  0.1  0.0  15300  3716 ?        Ss   May21   9:07 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
-root         734  0.0  0.0 244244  2376 ?        Ss   May21   0:05 /usr/lib/systemd/systemd-logind
-robertp+    1838  0.0  0.0  17100  3944 ?        Ss   May21   0:04 /usr/lib/systemd/systemd --user
-robertp+    1876  0.0  0.0  14528  3620 ?        Ss   May21   1:35 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
-robertp+ 1134426  0.0  0.0   7268  2808 pts/2    S+   15:46   0:00 /bin/bash -c ps aux | grep systemd
-robertp+ 1134428  0.0  0.0   6412  2228 pts/2    S+   15:46   0:00 grep systemd
+root         268  0.0  0.1  40180  8964 ?        Ss   May21   0:18 /usr/lib/systemd/systemd-journald
+root         269  0.0  0.0  30984  2028 ?        Ss   May21   0:34 /usr/lib/systemd/systemd-udevd
+systemd+     664  0.0  0.0  89916  1080 ?        Ssl  May21   0:00 /usr/lib/systemd/systemd-timesyncd
+dbus         728  0.1  0.0  15300  3692 ?        Ss   May21   9:10 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         734  0.0  0.0 244244  2360 ?        Ss   May21   0:05 /usr/lib/systemd/systemd-logind
+robertp+    1838  0.0  0.0  17100  3928 ?        Ss   May21   0:04 /usr/lib/systemd/systemd --user
+robertp+    1876  0.0  0.0  14528  3616 ?        Ss   May21   1:36 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+robertp+ 1138639  0.0  0.0   7268  2776 pts/2    S+   16:04   0:00 /bin/bash -c ps aux | grep systemd
+robertp+ 1138641  0.0  0.0   6412  2112 pts/2    S+   16:04   0:00 grep systemd
