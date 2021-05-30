@@ -1,4 +1,6 @@
 #!/usr/bin/env python
 
-def Say_Hi():
-    print('Hello from <<script2>> -> module1')
+class Script2:
+    @staticmethod
+    def Say_Hi():
+        print('Hello from <<script2>> -> module1')
