@@ -1,16 +1,17 @@
 #!/usr/bin/env python
-# from module1 import m1_scrip1
-# from module1 import m1_scrip2
 
-# m1_scrip1.Script1.Say_Hi()
-# m1_scrip2.Script2.Say_Hi()
+import module1.m1_scrip1 as m1
+# import m1_scrip1 as m11
+# import m1_scrip2 as m12
+# import sys
+# sys.path.append('module1/')
 
 
-import sys
-sys.path.append('module1/')
+def Main():
+    return 1
+    # class2 = m1.Script1
+    # print(class2.ClassFunction('argx'))
 
-import m1_scrip2 as m12
-import m1_scrip1 as m11
 
-m11.Script1.Say_Hi()
-m12.Script2.Say_Hi()
+if __name__ == '__main__':
+    Main()
