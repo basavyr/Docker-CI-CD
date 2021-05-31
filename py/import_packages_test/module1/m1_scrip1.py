@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-from m1_scrip2 import *
-
-
+import m1_scrip2
 class Script1:
     @staticmethod
     def Say_Hi():
@@ -10,4 +8,4 @@ class Script1:
 
 
 if __name__ == '__main__':
-    X = Script2.Say_Hi()
+    X=m1_scrip2.Script2.Say_Hi()

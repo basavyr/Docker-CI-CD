@@ -5,4 +5,10 @@
 # m1_scrip1.Script1.Say_Hi()
 # m1_scrip2.Script2.Say_Hi()
 
-from module1 import m1_scrip1 as s1
+import sys
+sys.path.append('module1/')
+
+import m1_scrip1
+import m1_scrip2
+
+m1_scrip1.Script1.Say_Hi()
