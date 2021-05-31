@@ -16,7 +16,10 @@ class Script2:
         return f'This is the function -> <<{Script2.ClassFunction.__name__}>>\nThis is the argument {argument}'
 
 
+def Main():
+    Script2.Say_Hi()
+    m1_scrip1.Script1.Say_Hi()
 
 
 if __name__ == '__main__':
-    X = m1_scrip1.Script1.Say_Hi()
+    Main()
