@@ -7,6 +7,8 @@ except ImportError:
 
 
 class Script1:
+    ARGX = 'This is an argument from <<script1>>'
+
     @staticmethod
     def Say_Hi():
         print('Hello from <<script1>> -> module1')
