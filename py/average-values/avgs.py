@@ -9,6 +9,8 @@ fct = lambda x: 2 * x + 1
 
 mathValues = list(map(fct,randomData))
 
-print(randomData)
-
-print(mathValues)
+plt.plot(mathValues,'*k',label=r'$f(x)$')
+plt.plot(list(randomData),'-r',label=r'$f1(x)$')
+plt.legend(loc='best')
+plt.savefig('plot_averages.pdf',bbox_inches='tight',dpi=300)
+plt.close()
