@@ -3,14 +3,13 @@ import matplotlib.pyplot as plt
 from numpy import random as rd
 
 
-randomData = rd.choice([1, 2, 3], size=100)
+randomValues = lambda x, dev: x + rd.choice([1, -1], size=1) * dev
 
-fct = lambda x: 2 * x + 1
 
-mathValues = list(map(fct,randomData))
-
-plt.plot(mathValues,'*k',label=r'$f(x)$')
-plt.plot(list(randomData),'-r',label=r'$f1(x)$')
-plt.legend(loc='best')
-plt.savefig('plot_averages.pdf',bbox_inches='tight',dpi=300)
-plt.close()
+def Plot(data, plot_file):
+    x = data[0]
+    y = data[1]
+    plt.plot(x, y, '-*r', label=r'$f(x)$')
+    plt.legend(loc='best')
+    plt.savefig(plot_file, bbox_inches='tight', dpi=300)
+    plt.close()
