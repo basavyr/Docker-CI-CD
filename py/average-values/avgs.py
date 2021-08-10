@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 from numpy import random as rd
 
 
-randomValues = lambda x, dev: x + rd.choice([1, -1], size=1) * dev
+randomValues = lambda x, dev, n_times: [
+    x + rd.choice([1, -1], size=1)[0] * dev for _ in range(n_times)]
+
+
+print(randomValues(3, .2, 30))
 
 
 def Plot(data, plot_file):
@@ -13,3 +17,5 @@ def Plot(data, plot_file):
     plt.legend(loc='best')
     plt.savefig(plot_file, bbox_inches='tight', dpi=300)
     plt.close()
+
+
