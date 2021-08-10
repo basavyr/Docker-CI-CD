@@ -4,10 +4,7 @@ from numpy import random as rd
 
 
 randomValues = lambda x, dev, n_times: [
-    x + rd.choice([1, -1], size=1)[0] * dev for _ in range(n_times)]
-
-
-print(randomValues(3, .2, 30))
+    x + rd.choice([1, -1], size=1)[0] * rd.random() for _ in range(n_times)]
 
 
 def Plot(data, plot_file):
@@ -19,3 +16,7 @@ def Plot(data, plot_file):
     plt.close()
 
 
+p = randomValues(3, 0.2, 30)
+
+Plot([[i for i in range(len(p))],
+      p], 'plot_random.pdf')
